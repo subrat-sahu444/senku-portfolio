@@ -53,6 +53,8 @@ html {
   font-size: 16px;
   background-color: var(--bg-dark);
   color: #f1f5f9;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 body {
@@ -63,6 +65,7 @@ body {
   overflow-x: hidden;
   position: relative;
   min-height: 100vh;
+  width: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -1564,12 +1567,20 @@ pre code {
   transform: translateX(-50%) translateY(0);
 }
 
-/* Responsive Media Queries */
+/* ==========================================================================
+   MULTI-DEVICE RESPONSIVE BREAKPOINTS (Laptop, Desktop, Tablet, Smartphone)
+   ========================================================================== */
+
+/* 1. Large Tablets & Small Laptops (max-width: 1024px) */
 @media (max-width: 1024px) {
+  .hero-section {
+    padding: 3rem 0 5rem 0;
+  }
+
   .hero-grid {
     grid-template-columns: 1fr;
     text-align: center;
-    gap: 3rem;
+    gap: 3.5rem;
   }
 
   .hero-content {
@@ -1585,47 +1596,394 @@ pre code {
   .hero-metrics {
     justify-content: center;
     width: 100%;
-    max-width: 500px;
+    max-width: 520px;
+    margin: 0 auto;
   }
 
-  .bento-col-8, .bento-col-4, .bento-col-6 {
-    grid-column: span 12;
+  .bento-grid {
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1.25rem;
   }
+
+  .bento-col-8 { grid-column: span 12; }
+  .bento-col-4 { grid-column: span 12; }
+  .bento-col-6 { grid-column: span 6; }
+  .bento-col-12 { grid-column: span 12; }
 
   .senku-grid {
     grid-template-columns: 1fr;
     text-align: center;
+    gap: 2.5rem;
+  }
+
+  .senku-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .senku-card-banner {
+    padding: 2.5rem;
   }
 
   .contact-grid {
     grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .senku-chat-window {
+    max-width: 90%;
+    height: 75vh;
   }
 }
 
+/* 2. Portrait Tablets & Large Phones (max-width: 768px) */
 @media (max-width: 768px) {
+  :root {
+    --nav-height: 64px;
+  }
+
+  .navbar-wrapper {
+    top: 0.6rem;
+    padding: 0 0.8rem;
+  }
+
+  .navbar {
+    height: 60px;
+    padding: 0 1rem;
+  }
+
   .nav-links {
     display: none;
   }
 
   .mobile-menu-toggle {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #fff;
+    font-size: 1.2rem;
+  }
+
+  .section-padding {
+    padding: 4rem 0;
+  }
+
+  .section-title {
+    font-size: clamp(1.8rem, 6vw, 2.6rem);
+  }
+
+  .section-subtitle {
+    font-size: 1rem;
   }
 
   .hero-title {
-    font-size: 2.5rem;
+    font-size: clamp(2.2rem, 7vw, 3.2rem);
+  }
+
+  .hero-description {
+    font-size: 1.05rem;
+  }
+
+  .bento-col-6 {
+    grid-column: span 12;
+  }
+
+  .bento-item {
+    padding: 1.6rem 1.3rem;
   }
 
   .senku-card-banner {
-    padding: 2rem;
+    padding: 2rem 1.4rem;
+    border-radius: 24px;
   }
 
   .senku-features-grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .projects-grid {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+    gap: 1.5rem;
+  }
+
+  .terminal-wrapper {
+    margin-top: 2rem;
+    border-radius: 16px;
+  }
+
+  .terminal-screen {
+    padding: 1.1rem;
+    min-height: 260px;
+    font-size: 0.82rem;
+  }
+
+  .contact-form-card {
+    padding: 1.8rem 1.3rem;
   }
 
   .floating-senku-dock {
     bottom: 1.25rem;
     right: 1.25rem;
+  }
+
+  .senku-dock-btn {
+    padding: 0.65rem 1.15rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* 3. Smartphones & Compact Displays (max-width: 540px) */
+@media (max-width: 540px) {
+  .container {
+    padding: 0 0.9rem;
+  }
+
+  .brand-text {
+    font-size: 1.05rem;
+  }
+
+  .brand-icon {
+    width: 34px;
+    height: 34px;
+    font-size: 1rem;
+  }
+
+  /* Compact Navbar Action */
+  .nav-actions .btn-glass-primary {
+    padding: 0.5rem 0.9rem;
+    font-size: 0.85rem;
+  }
+
+  .nav-actions .btn-glass-primary span {
+    display: none;
+  }
+
+  .hero-section {
+    padding: 2rem 0 3.5rem 0;
+  }
+
+  .hero-title {
+    font-size: 2.1rem;
+    line-height: 1.2;
+  }
+
+  .hero-description {
+    font-size: 0.98rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+
+  /* Full-width Stacked CTA Buttons on Phones */
+  .hero-cta-group {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.8rem;
+  }
+
+  .hero-cta-group .btn-glass-primary,
+  .hero-cta-group .btn-glass-secondary {
+    width: 100%;
+    padding: 0.85rem 1.2rem;
+    font-size: 0.95rem;
+  }
+
+  /* Compact 3-Column Telemetry on Phones */
+  .hero-metrics {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.4rem;
+    padding-top: 1.5rem;
+  }
+
+  .metric-value {
+    font-size: 1.5rem;
+  }
+
+  .metric-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.02em;
+  }
+
+  /* Hologram Profile Card on Phones */
+  .holo-card-container {
+    max-width: 100%;
+  }
+
+  .holo-card {
+    padding: 1.5rem 1rem;
+    border-radius: 20px;
+  }
+
+  /* Contain floating badges within phone viewport to prevent horizontal scroll */
+  .orbital-badge-1 {
+    top: -8px;
+    right: 4px;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.72rem;
+  }
+
+  .orbital-badge-2 {
+    bottom: 8px;
+    left: 4px;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.72rem;
+  }
+
+  .holo-avatar-wrap {
+    width: 110px;
+    height: 110px;
+  }
+
+  /* Senku Orb Scaled for Phones */
+  .senku-orb-wrapper {
+    width: 180px;
+    height: 180px;
+    margin-bottom: 1.25rem;
+  }
+
+  .senku-orb-core {
+    width: 100px;
+    height: 100px;
+    font-size: 2.4rem;
+  }
+
+  .senku-orb-ring-1 {
+    width: 155px;
+    height: 155px;
+  }
+
+  .senku-orb-ring-2 {
+    width: 185px;
+    height: 185px;
+  }
+
+  .senku-status-panel {
+    font-size: 0.75rem;
+    padding: 0.85rem 1rem;
+  }
+
+  /* Horizontal Swipeable Project Filter Bar on Phones */
+  .project-filters {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 0.6rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin: 1.5rem 0 2rem 0;
+  }
+
+  .project-filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter-btn {
+    flex-shrink: 0;
+    padding: 0.45rem 1.05rem;
+    font-size: 0.8rem;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .project-preview {
+    height: 170px;
+  }
+
+  .project-body {
+    padding: 1.3rem;
+  }
+
+  /* Prevent iOS Safari input auto-zoom */
+  .form-control, .term-input, .chat-input-field {
+    font-size: 16px !important;
+  }
+
+  /* Mobile Bottom-Sheet Chat Modal */
+  .senku-modal-overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .senku-chat-window {
+    width: 100%;
+    max-width: 100%;
+    height: 94dvh;
+    max-height: 94dvh;
+    border-radius: 24px 24px 0 0;
+    border-bottom: none;
+    transform: translateY(100%);
+  }
+
+  .senku-modal-overlay.active .senku-chat-window {
+    transform: translateY(0);
+  }
+
+  .chat-header {
+    padding: 0.9rem 1.1rem;
+  }
+
+  .chat-body {
+    padding: 1rem 0.8rem;
+    gap: 1rem;
+  }
+
+  .chat-msg {
+    max-width: 95%;
+  }
+
+  .msg-bubble {
+    padding: 0.85rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .quick-prompts-bar {
+    padding: 0.5rem 0.8rem;
+  }
+
+  .chat-input-bar {
+    padding: 0.75rem 0.9rem calc(0.75rem + env(safe-area-inset-bottom, 8px));
+  }
+
+  .floating-senku-dock {
+    bottom: 1rem;
+    right: 1rem;
+  }
+
+  .senku-dock-btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.85rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 245, 160, 0.4);
+  }
+
+  .toast-notice {
+    width: 90%;
+    padding: 0.7rem 1.2rem;
+    font-size: 0.8rem;
+    text-align: center;
+    justify-content: center;
+  }
+}
+
+/* 4. Ultra-Wide Displays (> 1600px) */
+@media (min-width: 1600px) {
+  :root {
+    --container-max: 1440px;
+  }
+
+  .hero-title {
+    font-size: 4.8rem;
+  }
+
+  .section-padding {
+    padding: 8rem 0;
   }
 }
 

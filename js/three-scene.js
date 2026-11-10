@@ -229,14 +229,23 @@
 
   function positionHeroCore() {
     if (!heroCoreGroup) return;
-    if (window.innerWidth < 1024) {
-      // Mobile / tablet: center behind
-      heroCoreGroup.position.set(0, 80, 200);
-      heroCoreGroup.scale.set(0.7, 0.7, 0.7);
-    } else {
-      // Desktop: floating on hero right
-      heroCoreGroup.position.set(380, 50, 250);
+    const w = window.innerWidth;
+    if (w >= 1200) {
+      // Large Desktop: right hero visual
+      heroCoreGroup.position.set(380, 40, 250);
       heroCoreGroup.scale.set(1.15, 1.15, 1.15);
+    } else if (w >= 1024) {
+      // Laptop / Small Desktop
+      heroCoreGroup.position.set(310, 30, 200);
+      heroCoreGroup.scale.set(0.95, 0.95, 0.95);
+    } else if (w >= 640) {
+      // Tablet: centered gently behind
+      heroCoreGroup.position.set(0, 90, 80);
+      heroCoreGroup.scale.set(0.75, 0.75, 0.75);
+    } else {
+      // Mobile / Smartphone: ambient background core
+      heroCoreGroup.position.set(0, -60, -50);
+      heroCoreGroup.scale.set(0.5, 0.5, 0.5);
     }
   }
 

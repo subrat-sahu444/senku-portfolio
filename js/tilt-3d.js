@@ -4,6 +4,10 @@
    ========================================================================== */
 
 (function () {
+  // Only activate 3D cursor tilt on devices with a mouse/pointer (desktops, laptops)
+  const isPointerDevice = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (!isPointerDevice) return;
+
   const cards = document.querySelectorAll('.tilt-card, .glass-card, .holo-card, .bento-item, .project-card');
 
   cards.forEach((card) => {
