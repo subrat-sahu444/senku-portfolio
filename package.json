@@ -1,0 +1,20 @@
+{
+  "name": "senku-portfolio",
+  "version": "1.0.0",
+  "description": "3D Stylish Glassmorphic Portfolio featuring personal introduction and Senku AI companion",
+  "scripts": {
+    "start": "node server.js",
+    "tunnel": "bin\\cloudflared.exe tunnel --url http://127.0.0.1:3000",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "portfolio",
+    "glassmorphism",
+    "threejs",
+    "ai-companion",
+    "senku",
+    "3d-web"
+  ],
+  "author": "Subrat",
+  "license": "MIT"
+}

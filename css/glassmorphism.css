@@ -1,0 +1,229 @@
+/* ==========================================================================
+   GLASSMORPHISM & 3D SCI-FI SPECIAL EFFECTS
+   High-performance frosted glass, glowing borders, specular reflection
+   ========================================================================== */
+
+/* Universal Glass Base */
+.glass-panel {
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  position: relative;
+  transition: border-color var(--transition-smooth), box-shadow var(--transition-smooth);
+}
+
+.glass-panel:hover {
+  border-color: rgba(0, 245, 160, 0.35);
+  box-shadow: 
+    0 25px 60px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(0, 245, 160, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+/* Glass Card with 3D Depth */
+.glass-card {
+  background: linear-gradient(
+    135deg, 
+    rgba(255, 255, 255, 0.07) 0%, 
+    rgba(255, 255, 255, 0.02) 100%
+  ), rgba(11, 17, 32, 0.75);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.45),
+    inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Dynamic Specular Follower (controlled by tilt-3d.js) */
+.glass-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(0, 245, 160, 0.12),
+    transparent 45%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.glass-card:hover::before {
+  opacity: 1;
+}
+
+/* Glowing Neon Card Variant */
+.glass-card-glow {
+  border-color: rgba(0, 245, 160, 0.3);
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.6),
+    0 0 25px rgba(0, 245, 160, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.glass-card-purple {
+  border-color: rgba(139, 92, 246, 0.3);
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.6),
+    0 0 25px rgba(139, 92, 246, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.glass-card-cyan {
+  border-color: rgba(0, 217, 245, 0.3);
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.6),
+    0 0 25px rgba(0, 217, 245, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Glass Buttons */
+.btn-glass-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 0.85rem 1.8rem;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, rgba(0, 245, 160, 0.2), rgba(0, 217, 245, 0.25));
+  border: 1px solid rgba(0, 245, 160, 0.5);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0, 245, 160, 0.2);
+  transition: all var(--transition-bounce);
+}
+
+.btn-glass-primary:hover {
+  transform: translateY(-3px) scale(1.02);
+  background: linear-gradient(135deg, rgba(0, 245, 160, 0.35), rgba(0, 217, 245, 0.4));
+  border-color: var(--color-senku-green);
+  box-shadow: 0 8px 30px rgba(0, 245, 160, 0.45);
+  color: #ffffff;
+}
+
+.btn-glass-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 0.85rem 1.8rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #e2e8f0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all var(--transition-fast);
+}
+
+.btn-glass-secondary:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #fff;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Shimmer Light Bar Effect across Glass Elements */
+.glass-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-shimmer::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    60deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.08) 50%,
+    transparent 60%
+  );
+  transform: rotate(25deg);
+  pointer-events: none;
+  animation: sweepShimmer 7s infinite ease-in-out;
+}
+
+@keyframes sweepShimmer {
+  0% { transform: translateY(-100%) rotate(25deg); }
+  25%, 100% { transform: translateY(100%) rotate(25deg); }
+}
+
+/* Glass Pill Tags */
+.glass-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  font-family: var(--font-code);
+  font-size: 0.78rem;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #cbd5e1;
+  backdrop-filter: blur(8px);
+}
+
+/* Glass Badges */
+.glass-badge-senku {
+  background: rgba(0, 245, 160, 0.1);
+  border: 1px solid rgba(0, 245, 160, 0.3);
+  color: var(--color-senku-green);
+}
+
+.glass-badge-purple {
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  color: var(--color-senku-purple);
+}
+
+.glass-badge-cyan {
+  background: rgba(0, 217, 245, 0.1);
+  border: 1px solid rgba(0, 217, 245, 0.3);
+  color: var(--color-senku-cyan);
+}
+
+/* Custom Scrollbar for Glass Containers */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(6, 9, 19, 0.8);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 245, 160, 0.4);
+}

@@ -1,0 +1,8 @@
+# Binaries & large dependencies
+bin/
+node_modules/
+
+# OS and temp files
+.DS_Store
+Thumbs.db
+*.log

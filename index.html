@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subrat // Portfolio & Senku AI Companion</title>
+  <meta name="description" content="3D Stylish Glassmorphic Portfolio featuring my personal introduction and Senku - an autonomous scientific AI companion ready to solve anything.">
+
+  <!-- Favicon Icon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%200%22%20100%22%20100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/glassmorphism.css">
+</head>
+<body>
+
+  <!-- WebGL 3D Background Canvas -->
+  <canvas id="webgl-canvas"></canvas>
+
+  <!-- Ambient Light Fields & Grid -->
+  <div class="ambient-glow-1"></div>
+  <div class="ambient-glow-2"></div>
+  <div class="ambient-grid"></div>
+
+  <!-- Main Application Wrapper -->
+  <div class="site-wrapper">
+
+    <!-- Top Sticky Glassmorphic Navbar -->
+    <header class="navbar-wrapper">
+      <nav class="navbar glass-panel">
+        <a href="#hero" class="nav-brand">
+          <div class="brand-icon">
+            <i class="fa-solid fa-flask-vial"></i>
+          </div>
+          <div>
+            <div class="brand-text">SUBRAT<span style="color:var(--color-senku-green)">.DEV</span></div>
+            <span class="brand-sub">10 BILLION % LOGIC</span>
+          </div>
+        </a>
+
+        <!-- Navigation Links -->
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#hero" class="nav-link active">Home</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#senku" class="nav-link"><i class="fa-solid fa-atom" style="color:var(--color-senku-green)"></i> Senku AI</a></li>
+          <li><a href="#projects" class="nav-link">Projects</a></li>
+          <li><a href="#terminal" class="nav-link">Terminal</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+
+        <!-- Action Buttons -->
+        <div class="nav-actions">
+          <button class="icon-btn" id="soundToggleNav" title="Toggle Sound FX">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+          
+          <button class="btn-glass-primary" data-open-senku>
+            <i class="fa-solid fa-microchip"></i>
+            <span>Summon Senku</span>
+          </button>
+
+          <button class="mobile-menu-toggle" id="mobileToggle" aria-label="Toggle Menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <!-- =================================================================
+           HERO SECTION: Personal Intro & 3D Holographic Showcase
+           ================================================================= -->
+      <section class="hero-section" id="hero">
+        <div class="container">
+          <div class="hero-grid">
+            
+            <!-- Left Hero Content -->
+            <div class="hero-content">
+              <div class="status-badge">
+                <span class="status-dot"></span>
+                <span>SYSTEM STATUS: 10 BILLION PERCENT OPTIMAL</span>
+              </div>
+
+              <h1 class="hero-title">
+                Architecting the Future with <span class="text-gradient">Code & Science</span>
+              </h1>
+
+              <p class="hero-description">
+                Hello world! I am a full-stack engineer and AI architect who turns raw logic into immersive digital realities. Equipped with first-principles methodology and my autonomous AI companion, <strong>Senku</strong>, ready to crack any technical bottleneck.
+              </p>
+
+              <div class="hero-cta-group">
+                <button class="btn-glass-primary" data-open-senku>
+                  <i class="fa-solid fa-atom"></i>
+                  <span>Consult Senku AI</span>
+                </button>
+
+                <a href="#projects" class="btn-glass-secondary">
+                  <i class="fa-solid fa-layer-group"></i>
+                  <span>Explore Work</span>
+                </a>
+              </div>
+
+              <!-- Metric Counters -->
+              <div class="hero-metrics">
+                <div class="metric-item">
+                  <div class="metric-value" data-target="45" data-suffix="+">0</div>
+                  <div class="metric-label">PROJECTS CRAFTED</div>
+                </div>
+                <div class="metric-item">
+                  <div class="metric-value" data-target="10" data-suffix="B%">0</div>
+                  <div class="metric-label">SENKU PRECISION</div>
+                </div>
+                <div class="metric-item">
+                  <div class="metric-value" data-target="99" data-suffix=".9%">0</div>
+                  <div class="metric-label">UPTIME & SPEED</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right 3D Holographic Identity Card -->
+            <div class="hero-visual">
+              <div class="holo-card-container">
+                
+                <!-- Floating 3D Badges -->
+                <div class="floating-orbital-badge orbital-badge-1 glass-panel">
+                  <i class="fa-solid fa-dna" style="color:var(--color-senku-green)"></i>
+                  <span>AI ARCHITECT</span>
+                </div>
+
+                <div class="floating-orbital-badge orbital-badge-2 glass-panel">
+                  <i class="fa-solid fa-cube" style="color:var(--color-senku-purple)"></i>
+                  <span>THREE.JS 3D</span>
+                </div>
+
+                <!-- Main Glass Hologram Card -->
+                <div class="holo-card glass-panel glass-shimmer">
+                  <div class="holo-avatar-wrap">
+                    <div class="holo-avatar-ring"></div>
+                    <div class="holo-avatar-ring-2"></div>
+                    <div class="holo-avatar">
+                      <i class="fa-solid fa-terminal"></i>
+                    </div>
+                  </div>
+
+                  <div class="holo-info">
+                    <h3 class="holo-name">Subrat</h3>
+                    <div class="holo-role">// Full-Stack & Generative AI Engineer</div>
+                  </div>
+
+                  <div class="holo-tags">
+                    <span class="holo-tag">TypeScript</span>
+                    <span class="holo-tag">Python</span>
+                    <span class="holo-tag">Three.js</span>
+                    <span class="holo-tag">Neural Systems</span>
+                    <span class="holo-tag">Next.js</span>
+                  </div>
+
+                  <div class="holo-ai-badge">
+                    <span>
+                      <i class="fa-solid fa-circle-check"></i>
+                      Senku AI Companion
+                    </span>
+                    <span style="color:var(--color-senku-green);font-family:var(--font-code);">ONLINE</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================
+           ABOUT SECTION: Interactive 3D Bento Grid
+           ================================================================= -->
+      <section class="section-padding" id="about">
+        <div class="container">
+          <div class="section-tag">
+            <i class="fa-solid fa-circle-nodes"></i>
+            <span>SYSTEM DOSSIER</span>
+          </div>
+          <h2 class="section-title">The Mind Behind the Machine</h2>
+          <p class="section-subtitle">
+            Bridging fundamental scientific principles with modern software craftsmanship. Here is the architecture of how I build, think, and innovate.
+          </p>
+
+          <div class="bento-grid">
+            <!-- Bento 1: First Principles -->
+            <div class="bento-item bento-col-8 glass-card">
+              <div class="bento-icon-box">
+                <i class="fa-solid fa-lightbulb"></i>
+              </div>
+              <h3 class="bento-title">First-Principles Engineering</h3>
+              <p class="bento-desc">
+                I don’t blindly copy templates or rely on superficial abstractions. Like Dr. Stone’s relentless methodology, I strip complex challenges down to their fundamental truths, building rock-solid software stacks that scale from the ground up.
+              </p>
+              <div class="quote-highlight">
+                "There’s nothing in this universe that can’t be engineered through relentless iteration, rigorous logic, and unwavering curiosity."
+              </div>
+            </div>
+
+            <!-- Bento 2: Core Philosophy -->
+            <div class="bento-item bento-col-4 glass-card">
+              <div class="bento-icon-box bento-icon-purple">
+                <i class="fa-solid fa-microchip"></i>
+              </div>
+              <h3 class="bento-title">AI-Augmented Velocity</h3>
+              <p class="bento-desc">
+                By integrating specialized autonomous agents like Senku into my daily workflow, I solve architectural puzzles 10x faster with military-grade precision.
+              </p>
+              <div class="tech-chips">
+                <span class="tech-chip"><i class="fa-solid fa-bolt"></i> Autonomous Agents</span>
+                <span class="tech-chip"><i class="fa-solid fa-network-wired"></i> LLM Pipelines</span>
+                <span class="tech-chip"><i class="fa-solid fa-brain"></i> RAG Architectures</span>
+              </div>
+            </div>
+
+            <!-- Bento 3: Technical Arsenal -->
+            <div class="bento-item bento-col-6 glass-card">
+              <div class="bento-icon-box bento-icon-cyan">
+                <i class="fa-solid fa-layer-group"></i>
+              </div>
+              <h3 class="bento-title">Full-Stack Scientific Stack</h3>
+              <p class="bento-desc">
+                Modern reactive interfaces paired with distributed, high-throughput backends.
+              </p>
+              <div class="tech-chips">
+                <span class="tech-chip"><i class="fa-brands fa-react"></i> React / Next.js</span>
+                <span class="tech-chip"><i class="fa-brands fa-js"></i> TypeScript</span>
+                <span class="tech-chip"><i class="fa-brands fa-python"></i> Python / FastAPI</span>
+                <span class="tech-chip"><i class="fa-brands fa-node-js"></i> Node.js</span>
+                <span class="tech-chip"><i class="fa-brands fa-docker"></i> Docker / Cloud</span>
+                <span class="tech-chip"><i class="fa-solid fa-cubes"></i> Three.js / WebGL</span>
+              </div>
+            </div>
+
+            <!-- Bento 4: Creative 3D & Spatial UI -->
+            <div class="bento-item bento-col-6 glass-card">
+              <div class="bento-icon-box">
+                <i class="fa-solid fa-cube"></i>
+              </div>
+              <h3 class="bento-title">Spatial 3D & Glassmorphic Design</h3>
+              <p class="bento-desc">
+                Crafting interfaces that feel physical, tactile, and alive. Combining multi-layer backdrop blurs, realistic specular reflections, and GPU-accelerated shaders.
+              </p>
+              <div class="tech-chips">
+                <span class="tech-chip"><i class="fa-solid fa-wand-magic-sparkles"></i> Glassmorphism</span>
+                <span class="tech-chip"><i class="fa-solid fa-sun"></i> Specular Lighting</span>
+                <span class="tech-chip"><i class="fa-solid fa-compass-drafting"></i> 60FPS Animations</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================
+           SENKU AI SHOWCASE SECTION: Introducing the custom AI Companion
+           ================================================================= -->
+      <section class="section-padding senku-section" id="senku">
+        <div class="container">
+          <div class="senku-card-banner glass-panel">
+            <div class="senku-grid">
+
+              <!-- Left Side: Senku Lore & Capabilities -->
+              <div class="senku-details">
+                <div class="section-tag">
+                  <i class="fa-solid fa-atom"></i>
+                  <span>DEEPMIND ANTIGRAVITY COGNITIVE CORE</span>
+                </div>
+                <h2 class="section-title">
+                  Meet <span class="text-gradient">SENKU</span>: The 10 Billion % Agentic AI
+                </h2>
+                <p class="section-subtitle" style="margin-bottom: 2rem;">
+                  Engineered by merging <strong>Dr. Stone's first-principles scientific genius</strong> with the <strong>Google DeepMind Antigravity agentic coding architecture</strong>. Senku doesn't just autocomplete code—he reasons through problems step-by-step with deep chain-of-thought, plans execution roadmaps, and pairs with you like a senior staff engineer.
+                </p>
+
+                <!-- Features Grid -->
+                <div class="senku-features-grid">
+                  <div class="senku-feat-card">
+                    <div class="feat-icon"><i class="fa-solid fa-brain"></i></div>
+                    <div class="feat-title">Extended Chain-of-Thought</div>
+                    <div class="feat-desc">Displays deep reasoning, hypothesis testing, and architectural trade-offs for every solution.</div>
+                  </div>
+
+                  <div class="senku-feat-card">
+                    <div class="feat-icon"><i class="fa-solid fa-list-check"></i></div>
+                    <div class="feat-title">Agentic Action Planner</div>
+                    <div class="feat-desc">Formulates structured phase-by-phase execution blueprints with verification criteria.</div>
+                  </div>
+
+                  <div class="senku-feat-card">
+                    <div class="feat-icon"><i class="fa-solid fa-code"></i></div>
+                    <div class="feat-title">Production Code Synthesizer</div>
+                    <div class="feat-desc">Generates typed, resilient, and non-blocking snippets across TypeScript, Python, and WebGL.</div>
+                  </div>
+
+                  <div class="senku-feat-card">
+                    <div class="feat-icon"><i class="fa-solid fa-microphone"></i></div>
+                    <div class="feat-title">Voice & TTS Synthesis</div>
+                    <div class="feat-desc">Natural spoken scientific feedback powered by Web Speech API voice synthesis.</div>
+                  </div>
+                </div>
+
+                <!-- CTA -->
+                <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-top:1.5rem;">
+                  <button class="btn-glass-primary" data-open-senku>
+                    <i class="fa-solid fa-comments"></i>
+                    <span>Talk to Senku Now</span>
+                  </button>
+                  <a href="#terminal" class="btn-glass-secondary">
+                    <i class="fa-solid fa-terminal"></i>
+                    <span>Use Terminal CLI</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Right Side: Glowing Senku Core Visualizer -->
+              <div class="senku-core-visual">
+                <div class="senku-orb-wrapper">
+                  <div class="senku-orb-ring-1"></div>
+                  <div class="senku-orb-ring-2"></div>
+                  <div class="senku-orb-core">
+                    <i class="fa-solid fa-atom"></i>
+                  </div>
+                </div>
+
+                <!-- Telemetry Status Box -->
+                <div class="senku-status-panel">
+                  <div class="status-row">
+                    <span class="status-label">UNIT DESIGNATION:</span>
+                    <span class="status-val">S.E.N.K.U. v3.8</span>
+                  </div>
+                  <div class="status-row">
+                    <span class="status-label">COGNITIVE CONFIDENCE:</span>
+                    <span class="status-val">10,000,000,000%</span>
+                  </div>
+                  <div class="status-row">
+                    <span class="status-label">RESPONSE LATENCY:</span>
+                    <span class="status-val">0.024 MS (LOCAL)</span>
+                  </div>
+                  <div class="status-row">
+                    <span class="status-label">REASONING METHOD:</span>
+                    <span class="status-val">FIRST PRINCIPLES</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================
+           PROJECTS SHOWCASE SECTION: 3D Interactive Cards
+           ================================================================= -->
+      <section class="section-padding" id="projects">
+        <div class="container">
+          <div class="section-tag">
+            <i class="fa-solid fa-flask"></i>
+            <span>EXPERIMENTS & LABS</span>
+          </div>
+          <h2 class="section-title">Featured Innovations</h2>
+          <p class="section-subtitle">
+            A curated collection of scalable software architectures, AI systems, and 3D spatial web experiences.
+          </p>
+
+          <!-- Filter Pills -->
+          <div class="project-filters">
+            <button class="filter-btn active" data-filter="all">All Projects</button>
+            <button class="filter-btn" data-filter="ai">AI & Neural</button>
+            <button class="filter-btn" data-filter="3d">3D & WebGL</button>
+            <button class="filter-btn" data-filter="fullstack">Full-Stack Systems</button>
+          </div>
+
+          <!-- Projects Grid -->
+          <div class="projects-grid">
+            
+            <!-- Project 1 -->
+            <div class="project-card glass-card" data-category="ai">
+              <div class="project-preview">
+                <span class="project-category-tag">AI & ORCHESTRATION</span>
+                <i class="fa-solid fa-brain project-preview-graphic"></i>
+              </div>
+              <div class="project-body">
+                <h3 class="project-title">Project Senku: Neural Engine</h3>
+                <p class="project-desc">
+                  Autonomous agent framework designed to orchestrate multi-agent workflows, code debugging, and iterative reasoning using first-principles logic chains.
+                </p>
+                <div class="tech-chips" style="margin-bottom:1rem;">
+                  <span class="tech-chip">Python</span>
+                  <span class="tech-chip">Gemini Flash</span>
+                  <span class="tech-chip">LangGraph</span>
+                  <span class="tech-chip">FastAPI</span>
+                </div>
+                <div class="project-footer">
+                  <span class="text-mono" style="font-size:0.8rem;color:var(--color-senku-green)">STATUS: PRODUCTION</span>
+                  <div class="project-links">
+                    <a href="#senku" class="project-link-btn" title="Inspect with Senku" data-open-senku><i class="fa-solid fa-atom"></i></a>
+                    <a href="https://github.com" target="_blank" rel="noopener" class="project-link-btn" title="GitHub Source"><i class="fa-brands fa-github"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-card glass-card" data-category="3d">
+              <div class="project-preview">
+                <span class="project-category-tag">3D & GRAPHICS</span>
+                <i class="fa-solid fa-cube project-preview-graphic"></i>
+              </div>
+              <div class="project-body">
+                <h3 class="project-title">Aether 3D Web Studio</h3>
+                <p class="project-desc">
+                  Real-time browser-based WebGL studio allowing users to assemble procedural shader environments, raymarching crystals, and spatial audio scenes.
+                </p>
+                <div class="tech-chips" style="margin-bottom:1rem;">
+                  <span class="tech-chip">Three.js</span>
+                  <span class="tech-chip">GLSL Shaders</span>
+                  <span class="tech-chip">TypeScript</span>
+                  <span class="tech-chip">Web Audio API</span>
+                </div>
+                <div class="project-footer">
+                  <span class="text-mono" style="font-size:0.8rem;color:var(--color-senku-cyan)">STATUS: ACTIVE LAB</span>
+                  <div class="project-links">
+                    <a href="#terminal" class="project-link-btn" title="View in CLI"><i class="fa-solid fa-terminal"></i></a>
+                    <a href="https://github.com" target="_blank" rel="noopener" class="project-link-btn" title="GitHub Source"><i class="fa-brands fa-github"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-card glass-card" data-category="fullstack">
+              <div class="project-preview">
+                <span class="project-category-tag">FULL-STACK OS</span>
+                <i class="fa-solid fa-desktop project-preview-graphic"></i>
+              </div>
+              <div class="project-body">
+                <h3 class="project-title">ChronoLogic Web OS</h3>
+                <p class="project-desc">
+                  Glassmorphic web-based desktop workspace featuring window management, sandboxed execution runtime, and integrated scientific utilities.
+                </p>
+                <div class="tech-chips" style="margin-bottom:1rem;">
+                  <span class="tech-chip">React</span>
+                  <span class="tech-chip">TailwindCSS</span>
+                  <span class="tech-chip">Web Workers</span>
+                  <span class="tech-chip">IndexedDB</span>
+                </div>
+                <div class="project-footer">
+                  <span class="text-mono" style="font-size:0.8rem;color:var(--color-senku-purple)">STATUS: BETA v2.4</span>
+                  <div class="project-links">
+                    <a href="#senku" class="project-link-btn" title="Ask Senku" data-open-senku><i class="fa-solid fa-atom"></i></a>
+                    <a href="https://github.com" target="_blank" rel="noopener" class="project-link-btn" title="GitHub Source"><i class="fa-brands fa-github"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="project-card glass-card" data-category="ai">
+              <div class="project-preview">
+                <span class="project-category-tag">NEURAL MULTIMODAL</span>
+                <i class="fa-solid fa-network-wired project-preview-graphic"></i>
+              </div>
+              <div class="project-body">
+                <h3 class="project-title">OmniSynthesizer</h3>
+                <p class="project-desc">
+                  Multimodal pipeline merging speech-to-intent, real-time code execution, and high-fidelity 2D/3D chemical & programmatic rendering.
+                </p>
+                <div class="tech-chips" style="margin-bottom:1rem;">
+                  <span class="tech-chip">Gemini 2.5</span>
+                  <span class="tech-chip">Python</span>
+                  <span class="tech-chip">WebRTC</span>
+                  <span class="tech-chip">Docker</span>
+                </div>
+                <div class="project-footer">
+                  <span class="text-mono" style="font-size:0.8rem;color:var(--color-senku-green)">STATUS: PRODUCTION</span>
+                  <div class="project-links">
+                    <a href="#senku" class="project-link-btn" title="Ask Senku" data-open-senku><i class="fa-solid fa-atom"></i></a>
+                    <a href="https://github.com" target="_blank" rel="noopener" class="project-link-btn" title="GitHub Source"><i class="fa-brands fa-github"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Project 5 -->
+            <div class="project-card glass-card" data-category="fullstack">
+              <div class="project-preview">
+                <span class="project-category-tag">DISTRIBUTED CLOUD</span>
+                <i class="fa-solid fa-bolt project-preview-graphic"></i>
+              </div>
+              <div class="project-body">
+                <h3 class="project-title">HyperFlux Data Mesh</h3>
+                <p class="project-desc">
+                  Ultra-low latency streaming data pipeline capable of digesting millions of telemetry events per second with automatic anomaly detection.
+                </p>
+                <div class="tech-chips" style="margin-bottom:1rem;">
+                  <span class="tech-chip">Go / Rust</span>
+                  <span class="tech-chip">Kafka</span>
+                  <span class="tech-chip">PostgreSQL</span>
+                  <span class="tech-chip">Redis</span>
+                </div>
+                <div class="project-footer">
+                  <span class="text-mono" style="font-size:0.8rem;color:var(--color-senku-cyan)">STATUS: SCALED</span>
+                  <div class="project-links">
+                    <a href="#senku" class="project-link-btn" title="Ask Senku" data-open-senku><i class="fa-solid fa-atom"></i></a>
+                    <a href="https://github.com" target="_blank" rel="noopener" class="project-link-btn" title="GitHub Source"><i class="fa-brands fa-github"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Project 6 -->
+            <div class="project-card glass-card" data-category="3d">
+              <div class="project-preview">
+                <span class="project-category-tag">SPATIAL SCIENCE</span>
+                <i class="fa-solid fa-dna project-preview-graphic"></i>
+              </div>
+              <div class="project-body">
+                <h3 class="project-title">BioSynth Molecular Canvas</h3>
+                <p class="project-desc">
+                  Interactive 3D molecular viewer and protein-ligand conformation analyzer rendered directly within modern WebGL viewports.
+                </p>
+                <div class="tech-chips" style="margin-bottom:1rem;">
+                  <span class="tech-chip">Three.js</span>
+                  <span class="tech-chip">PDB Parser</span>
+                  <span class="tech-chip">WebGL 2.0</span>
+                  <span class="tech-chip">TypeScript</span>
+                </div>
+                <div class="project-footer">
+                  <span class="text-mono" style="font-size:0.8rem;color:var(--color-senku-purple)">STATUS: ACTIVE LAB</span>
+                  <div class="project-links">
+                    <a href="#terminal" class="project-link-btn" title="View in CLI"><i class="fa-solid fa-terminal"></i></a>
+                    <a href="https://github.com" target="_blank" rel="noopener" class="project-link-btn" title="GitHub Source"><i class="fa-brands fa-github"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================
+           INTERACTIVE SCIENTIFIC LAB TERMINAL
+           ================================================================= -->
+      <section class="section-padding" id="terminal">
+        <div class="container">
+          <div class="section-tag">
+            <i class="fa-solid fa-terminal"></i>
+            <span>LABORATORY PROTOCOL INTERFACE</span>
+          </div>
+          <h2 class="section-title">Direct Command Terminal</h2>
+          <p class="section-subtitle">
+            Prefer interacting via the command line? Run system commands, query Senku AI directly, inspect skills, or trigger laboratory easter eggs below.
+          </p>
+
+          <div class="terminal-wrapper glass-panel" id="terminalWrapper">
+            <!-- Header bar -->
+            <div class="terminal-header">
+              <div class="terminal-controls">
+                <span class="term-dot dot-red"></span>
+                <span class="term-dot dot-yellow"></span>
+                <span class="term-dot dot-green"></span>
+              </div>
+              <div class="terminal-title">
+                <i class="fa-solid fa-microchip"></i>
+                <span>subrat@senku-lab: /system/protocols</span>
+              </div>
+              <div style="font-family:var(--font-code);font-size:0.75rem;color:var(--color-senku-green)">
+                v3.8 [READY]
+              </div>
+            </div>
+
+            <!-- Terminal output screen -->
+            <div class="terminal-screen" id="termScreen">
+              <div class="term-output" id="termOutput">
+                <div class="term-line" style="color:var(--color-senku-green);">
+                  // SENKU SCIENCE LAB CLI INITIALIZED.
+                </div>
+                <div class="term-line" style="color:#94a3b8;">
+                  Type '<span style="color:var(--color-senku-green);font-weight:bold;">help</span>' to list protocols, or '<span style="color:var(--color-senku-cyan);font-weight:bold;">senku &lt;query&gt;</span>' for instantaneous AI assistance.
+                </div>
+              </div>
+
+              <!-- Input row -->
+              <div class="term-prompt-row">
+                <span class="term-prompt">visitor@senku-lab:~$</span>
+                <input type="text" class="term-input" id="termInput" placeholder="type a command (e.g. help, skills, formula, senku...)" autocomplete="off" spellcheck="false">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =================================================================
+           CONTACT & TRANSMISSION SECTION
+           ================================================================= -->
+      <section class="section-padding" id="contact">
+        <div class="container">
+          <div class="section-tag">
+            <i class="fa-solid fa-satellite-dish"></i>
+            <span>TRANSMISSION PORTAL</span>
+          </div>
+          <h2 class="section-title">Initiate Collaboration</h2>
+          <p class="section-subtitle">
+            Have a game-changing technical vision, complex architecture challenge, or want to discuss full-time/consulting opportunities? Transmit a dispatch.
+          </p>
+
+          <div class="contact-grid">
+            <!-- Left Info Panel -->
+            <div class="contact-info">
+              <h3 style="font-size:1.6rem;margin-bottom:1rem;">Let's Build Something Revolutionary</h3>
+              <p style="color:#94a3b8;line-height:1.7;margin-bottom:2rem;">
+                Whether you need scalable cloud architectures, generative AI integration, or an interactive 3D web experience, my team and Senku are ready to execute with ten billion percent effort.
+              </p>
+
+              <div class="contact-info-list">
+                <div class="contact-item">
+                  <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
+                  <div>
+                    <div class="contact-label">DIRECT FREQUENCY</div>
+                    <div class="contact-value">subrat.portfolio@dev.io</div>
+                  </div>
+                </div>
+
+                <div class="contact-item">
+                  <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+                  <div>
+                    <div class="contact-label">TIMEZONE & COORDINATES</div>
+                    <div class="contact-value">Global Remote // IST / UTC+5:30</div>
+                  </div>
+                </div>
+
+                <div class="contact-item">
+                  <div class="contact-icon"><i class="fa-solid fa-atom"></i></div>
+                  <div>
+                    <div class="contact-label">AI ASSISTANT STATUS</div>
+                    <div class="contact-value" style="color:var(--color-senku-green)">SENKU STANDING BY 24/7</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Social Links -->
+              <div class="social-links">
+                <a href="https://github.com" target="_blank" rel="noopener" class="social-pill">
+                  <i class="fa-brands fa-github"></i>
+                  <span>GitHub</span>
+                </a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener" class="social-pill">
+                  <i class="fa-brands fa-linkedin"></i>
+                  <span>LinkedIn</span>
+                </a>
+                <a href="https://x.com" target="_blank" rel="noopener" class="social-pill">
+                  <i class="fa-brands fa-x-twitter"></i>
+                  <span>Twitter / X</span>
+                </a>
+                <a href="mailto:subrat.portfolio@dev.io" class="social-pill">
+                  <i class="fa-solid fa-paper-plane"></i>
+                  <span>Email</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Right Form Panel -->
+            <div class="contact-form-card glass-panel">
+              <form id="contactForm">
+                <div class="form-group">
+                  <label for="formName" class="form-label">IDENTIFIER / NAME</label>
+                  <input type="text" id="formName" class="form-control" placeholder="Dr. Chrome or Jane Doe" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="formEmail" class="form-label">RETURN TRANSMISSION EMAIL</label>
+                  <input type="email" id="formEmail" class="form-control" placeholder="collab@domain.com" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="formMessage" class="form-label">PROJECT SPECIFICATIONS & MESSAGE</label>
+                  <textarea id="formMessage" class="form-control" placeholder="Detail your project scope, mission objectives, or architecture query..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn-glass-primary" style="width:100%;margin-top:0.5rem;">
+                  <i class="fa-solid fa-paper-plane"></i>
+                  <span>Transmit Dispatch to Subrat & Senku</span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div>
+          <div style="font-family:var(--font-display);font-weight:700;font-size:1.1rem;color:#fff;">
+            SUBRAT // PORTFOLIO
+          </div>
+          <div style="font-size:0.85rem;color:#64748b;margin-top:0.2rem;">
+            Architected with Three.js, Glassmorphism & Senku AI
+          </div>
+        </div>
+
+        <div class="footer-quote">
+          "Science is the only weapon that can never be blunted." — Senku Ishigami
+        </div>
+
+        <div style="font-family:var(--font-code);font-size:0.8rem;color:#64748b;">
+          © 2026 SUBRAT. ALL RIGHTS RESERVED.
+        </div>
+      </div>
+    </footer>
+
+    <!-- =================================================================
+         FLOATING ACTION DOCK: Instant Senku AI Companion Access
+         ================================================================= -->
+    <div class="floating-senku-dock">
+      <button class="senku-dock-btn" data-open-senku>
+        <span class="senku-dock-pulse"></span>
+        <i class="fa-solid fa-atom" style="color:var(--color-senku-green)"></i>
+        <span>Ask Senku AI</span>
+      </button>
+    </div>
+
+    <!-- =================================================================
+         SENKU AI CHAT MODAL WINDOW (Interactive Companion UI)
+         ================================================================= -->
+    <div class="senku-modal-overlay" id="senkuModal">
+      <div class="senku-chat-window glass-panel">
+        
+        <!-- Header -->
+        <div class="chat-header">
+          <div class="chat-header-info">
+            <div class="chat-senku-avatar">
+              <i class="fa-solid fa-atom"></i>
+            </div>
+            <div>
+              <div style="font-family:var(--font-display);font-weight:700;color:#fff;font-size:1.1rem;">
+                SENKU AI <span style="font-size:0.75rem;padding:0.2rem 0.6rem;background:rgba(0,245,160,0.15);border:1px solid var(--color-senku-green);border-radius:6px;color:var(--color-senku-green);">ONLINE</span>
+              </div>
+              <div style="font-family:var(--font-code);font-size:0.75rem;color:#94a3b8;">
+                Google DeepMind Antigravity Cognitive Core // Extended Reasoning Active
+              </div>
+            </div>
+          </div>
+
+          <div class="chat-header-actions">
+            <!-- Voice TTS Toggle -->
+            <button class="icon-btn" id="ttsToggleBtn" title="Voice Synthesis">
+              <i class="fa-solid fa-volume-high"></i>
+            </button>
+            <!-- Optional Gemini API Key Gear -->
+            <button class="icon-btn" id="apiSettingsBtn" title="Gemini API Key Settings">
+              <i class="fa-solid fa-gear"></i>
+            </button>
+            <!-- Close Modal -->
+            <button class="icon-btn" id="closeSenkuModal" title="Close Senku AI">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Chat Conversation Messages Body -->
+        <div class="chat-body" id="chatBody">
+          <!-- Initial Welcome Message from Senku with DeepMind Reasoning Block -->
+          <div class="chat-msg msg-senku">
+            <div class="chat-senku-avatar" style="width:36px;height:36px;font-size:1rem;flex-shrink:0;">
+              <i class="fa-solid fa-atom"></i>
+            </div>
+            <div class="msg-bubble">
+              <div class="msg-senku-header">
+                <span>SENKU AI // ANTIGRAVITY COGNITIVE CORE</span>
+              </div>
+              
+              <details class="senku-thought" open>
+                <summary>
+                  <div class="senku-thought-header-left">
+                    <i class="fa-solid fa-brain" style="color:var(--color-senku-cyan)"></i>
+                    <span>Thinking Process (DeepMind Antigravity Core)</span>
+                  </div>
+                  <span class="senku-thought-badge">READY</span>
+                </summary>
+                <div class="senku-thought-body">
+                  <div class="thought-step">
+                    <span class="thought-label"><i class="fa-solid fa-microscope"></i> Problem Deconstruction:</span>
+                    <span class="thought-text">System initialization sequence complete. Ready for visitor queries across architecture, code, and portfolio intelligence.</span>
+                  </div>
+                  <div class="thought-step">
+                    <span class="thought-label"><i class="fa-solid fa-code-fork"></i> Hypothesis & Strategy:</span>
+                    <span class="thought-text">Pair-programming mindset engaged: break all inquiries down into verifiable, production-grade first principles.</span>
+                  </div>
+                </div>
+              </details>
+
+              <div class="msg-content">
+                Kukuku! Ten billion percent ready to engineer solutions with you! I am <strong>Senku</strong>, Subrat's autonomous AI companion augmented with the <strong>Google DeepMind Antigravity agentic coding architecture</strong>.<br><br>
+                I think step-by-step from first principles, formulate execution plans, and write clean, typed code. What technical bottleneck or portfolio question are we solving today?
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Question Chips -->
+        <div class="quick-prompts-bar">
+          <button class="quick-chip" data-query="Who is Subrat and what is their background?">⚡ Who is Subrat?</button>
+          <button class="quick-chip" data-query="What are Subrat's top skills & technologies?">🛠️ Tech Arsenal</button>
+          <button class="quick-chip" data-query="How does Senku AI work?">🧪 How Senku Works</button>
+          <button class="quick-chip" data-query="Show me the glassmorphism CSS formula">🎨 Glassmorphic CSS</button>
+          <button class="quick-chip" data-query="Give me a clean async TypeScript snippet">💻 TypeScript Code</button>
+          <button class="quick-chip" data-query="How can I collaborate or hire Subrat?">🤝 Collaboration</button>
+        </div>
+
+        <!-- Input Bar -->
+        <div class="chat-input-bar">
+          <input type="text" class="chat-input-field" id="chatInput" placeholder="Ask Senku anything (code, projects, science, portfolio)..." autocomplete="off">
+          <button class="chat-send-btn" id="chatSendBtn" title="Send query">
+            <i class="fa-solid fa-paper-plane"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div class="toast-notice" id="toastNotice">
+      <i class="fa-solid fa-circle-check" style="color:var(--color-senku-green)"></i>
+      <span id="toastText">System update ready.</span>
+    </div>
+
+  </div>
+
+  <!-- CDN Script Dependencies -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <!-- Application Modules -->
+  <script src="js/audio-fx.js"></script>
+  <script src="js/three-scene.js"></script>
+  <script src="js/tilt-3d.js"></script>
+  <script src="js/senku-ai.js"></script>
+  <script src="js/terminal.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
