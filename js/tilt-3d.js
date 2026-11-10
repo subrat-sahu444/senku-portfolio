@@ -1,10 +1,10 @@
 /* ==========================================================================
-   3D PERSPECTIVE TILT & SPECULAR SHEEN ENGINE
-   Interactive physics-based tilt for glassmorphic cards
+   3D PERSPECTIVE TILT & SPECULAR SHEEN ENGINE (SMOOTH SPRING LERP)
+   Ultra-buttery physics-based tilt for glassmorphic cards with RAF damping
    ========================================================================== */
 
 (function () {
-  // Only activate 3D cursor tilt on devices with a mouse/pointer (desktops, laptops)
+  // Only activate 3D tilt on devices with a mouse/pointer
   const isPointerDevice = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   if (!isPointerDevice) return;
 
@@ -12,54 +12,95 @@
 
   cards.forEach((card) => {
     let bounds;
+    let targetTiltX = 0;
+    let targetTiltY = 0;
+    let currentTiltX = 0;
+    let currentTiltY = 0;
+    let targetScale = 1;
+    let currentScale = 1;
+    let isHovering = false;
+    let rafId = null;
 
-    function rotateToMouse(e) {
-      bounds = card.getBoundingClientRect();
-      const mouseX = e.clientX;
-      const mouseY = e.clientY;
-      const leftX = mouseX - bounds.x;
-      const topY = mouseY - bounds.y;
-      const center = {
-        x: leftX - bounds.width / 2,
-        y: topY - bounds.height / 2
-      };
-
-      const distance = Math.sqrt(center.x ** 2 + center.y ** 2);
-
-      // Tilt intensity
-      const maxTilt = 12;
-      const tiltX = (center.y / (bounds.height / 2)) * -maxTilt;
-      const tiltY = (center.x / (bounds.width / 2)) * maxTilt;
+    function updatePhysics() {
+      // Smooth exponential damping (lerp factor 0.12)
+      const lerpFactor = 0.12;
+      currentTiltX += (targetTiltX - currentTiltX) * lerpFactor;
+      currentTiltY += (targetTiltY - currentTiltY) * lerpFactor;
+      currentScale += (targetScale - currentScale) * lerpFactor;
 
       card.style.transform = `
         perspective(1000px)
-        rotateX(${tiltX.toFixed(2)}deg)
-        rotateY(${tiltY.toFixed(2)}deg)
-        scale3d(1.02, 1.02, 1.02)
+        rotateX(${currentTiltX.toFixed(3)}deg)
+        rotateY(${currentTiltY.toFixed(3)}deg)
+        scale3d(${currentScale.toFixed(3)}, ${currentScale.toFixed(3)}, ${currentScale.toFixed(3)})
+        translateZ(0)
       `;
 
-      // Set specular radial gradient coordinates
+      // Continue animating while hovering or until returned to resting state
+      const isResting = 
+        Math.abs(targetTiltX - currentTiltX) < 0.01 &&
+        Math.abs(targetTiltY - currentTiltY) < 0.01 &&
+        Math.abs(targetScale - currentScale) < 0.001;
+
+      if (isHovering || !isResting) {
+        rafId = requestAnimationFrame(updatePhysics);
+      } else {
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1) translateZ(0)';
+        rafId = null;
+      }
+    }
+
+    function onMouseMove(e) {
+      if (!bounds) bounds = card.getBoundingClientRect();
+      const mouseX = e.clientX;
+      const mouseY = e.clientY;
+      const leftX = mouseX - bounds.left;
+      const topY = mouseY - bounds.top;
+
+      const centerX = leftX - bounds.width / 2;
+      const centerY = topY - bounds.height / 2;
+
+      // Max tilt angle (smoother subtle tilt: 8deg)
+      const maxTilt = 8.5;
+      targetTiltX = (centerY / (bounds.height / 2)) * -maxTilt;
+      targetTiltY = (centerX / (bounds.width / 2)) * maxTilt;
+      targetScale = 1.018;
+
+      // Update specular sheen position smoothly
       const posX = ((leftX / bounds.width) * 100).toFixed(2);
       const posY = ((topY / bounds.height) * 100).toFixed(2);
       card.style.setProperty('--mouse-x', `${posX}%`);
       card.style.setProperty('--mouse-y', `${posY}%`);
+
+      if (!rafId) {
+        rafId = requestAnimationFrame(updatePhysics);
+      }
     }
 
-    function removeListener() {
-      card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-      card.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
-      card.removeEventListener('mousemove', rotateToMouse);
-    }
-
-    card.addEventListener('mouseenter', () => {
+    function onMouseEnter() {
       bounds = card.getBoundingClientRect();
-      card.style.transition = 'transform 0.1s ease-out';
-      card.addEventListener('mousemove', rotateToMouse);
+      isHovering = true;
+      card.style.willChange = 'transform';
+      if (!rafId) {
+        rafId = requestAnimationFrame(updatePhysics);
+      }
       if (window.soundEngine) {
         window.soundEngine.playHover();
       }
-    });
+    }
 
-    card.addEventListener('mouseleave', removeListener);
+    function onMouseLeave() {
+      isHovering = false;
+      targetTiltX = 0;
+      targetTiltY = 0;
+      targetScale = 1;
+      if (!rafId) {
+        rafId = requestAnimationFrame(updatePhysics);
+      }
+    }
+
+    card.addEventListener('mouseenter', onMouseEnter, { passive: true });
+    card.addEventListener('mousemove', onMouseMove, { passive: true });
+    card.addEventListener('mouseleave', onMouseLeave, { passive: true });
   });
 })();

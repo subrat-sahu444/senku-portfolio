@@ -266,4 +266,77 @@ document.addEventListener('DOMContentLoaded', () => {
       showToast(`⚡ 3D Core transitioned to ${mode.toUpperCase()} mode.`);
     });
   });
+
+  // 9. Smooth Scroll Progress Bar
+  const progressBar = document.createElement('div');
+  progressBar.id = 'scrollProgressBar';
+  progressBar.className = 'scroll-progress-bar';
+  document.body.prepend(progressBar);
+
+  function updateScrollProgress() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progressBar.style.width = `${scrollPercent}%`;
+  }
+  window.addEventListener('scroll', updateScrollProgress, { passive: true });
+  updateScrollProgress();
+
+  // 10. Smooth Anchor Navigation with Offset Compensation
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener('click', (e) => {
+      const targetId = anchor.getAttribute('href');
+      if (!targetId || targetId === '#' || targetId === '#senku' || targetId.startsWith('#senku')) return;
+      const targetEl = document.querySelector(targetId);
+      if (targetEl) {
+        e.preventDefault();
+        const navHeight = 78;
+        const targetY = targetEl.getBoundingClientRect().top + window.pageYOffset - navHeight;
+        window.scrollTo({
+          top: targetY,
+          behavior: 'smooth'
+        });
+        if (history.pushState) {
+          history.pushState(null, null, targetId);
+        }
+      }
+    });
+  });
+
+  // 11. Fluid Scroll-Driven Reveal Observer (Framer-Motion Style)
+  const revealTargets = document.querySelectorAll(`
+    .hero-title, .hero-description, .hero-cta-group, .hero-metrics,
+    .section-tag, .section-title, .section-subtitle,
+    .bento-item, .project-card, .skill-card, .timeline-item,
+    .terminal-container, .contact-card
+  `);
+
+  if ('IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      root: null,
+      rootMargin: '0px 0px -50px 0px',
+      threshold: 0.1
+    });
+
+    // Group items for staggered delays
+    const gridContainers = document.querySelectorAll('.bento-grid, .projects-grid, .skills-grid, .timeline-list');
+    gridContainers.forEach((grid) => {
+      const children = grid.children;
+      Array.from(children).forEach((child, index) => {
+        child.style.transitionDelay = `${(index % 6) * 0.08}s`;
+      });
+    });
+
+    revealTargets.forEach((el) => {
+      el.classList.add('reveal-init');
+      revealObserver.observe(el);
+    });
+  }
 });

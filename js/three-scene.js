@@ -309,6 +309,9 @@
 
     const delta = clock.getDelta();
     const elapsedTime = clock.getElapsedTime();
+    // Normalize to 60fps delta baseline for consistent silky motion across 60Hz/120Hz/144Hz screens
+    const deltaFactor = Math.min(delta * 60, 2.0);
+    const motionFactor = deltaFactor * speedMultiplier;
 
     // 1. Constellation slow rotation
     if (particleSystem) {
@@ -318,37 +321,37 @@
 
     // 2. Senku Hero Core scientific dynamics
     if (heroCoreGroup) {
-      // Smooth mouse follow
-      heroCoreGroup.rotation.y += (targetRotationY - heroCoreGroup.rotation.y) * 0.05;
-      heroCoreGroup.rotation.x += (targetRotationX - heroCoreGroup.rotation.x) * 0.05;
+      // Smooth mouse follow with damped interpolation
+      heroCoreGroup.rotation.y += (targetRotationY - heroCoreGroup.rotation.y) * 0.05 * deltaFactor;
+      heroCoreGroup.rotation.x += (targetRotationX - heroCoreGroup.rotation.x) * 0.05 * deltaFactor;
 
       // Organic idle floating
-      heroCoreGroup.position.y += Math.sin(elapsedTime * 1.5) * 0.4;
+      heroCoreGroup.position.y += Math.sin(elapsedTime * 1.5) * 0.35 * deltaFactor;
 
       // Internal component rotations
       if (innerCrystal) {
-        innerCrystal.rotation.x += 0.008 * speedMultiplier;
-        innerCrystal.rotation.y += 0.012 * speedMultiplier;
+        innerCrystal.rotation.x += 0.008 * motionFactor;
+        innerCrystal.rotation.y += 0.012 * motionFactor;
       }
 
       if (outerCage) {
-        outerCage.rotation.x -= 0.005 * speedMultiplier;
-        outerCage.rotation.z += 0.007 * speedMultiplier;
+        outerCage.rotation.x -= 0.005 * motionFactor;
+        outerCage.rotation.z += 0.007 * motionFactor;
       }
 
       if (ring1) {
-        ring1.rotation.z += 0.015 * speedMultiplier;
+        ring1.rotation.z += 0.015 * motionFactor;
       }
 
       if (ring2) {
-        ring2.rotation.x += 0.01 * speedMultiplier;
-        ring2.rotation.y -= 0.012 * speedMultiplier;
+        ring2.rotation.x += 0.01 * motionFactor;
+        ring2.rotation.y -= 0.012 * motionFactor;
       }
     }
 
     // Camera subtle drift
-    camera.position.x += (mouseX * 0.08 - camera.position.x) * 0.03;
-    camera.position.y += (-mouseY * 0.08 - camera.position.y) * 0.03;
+    camera.position.x += (mouseX * 0.08 - camera.position.x) * 0.025 * deltaFactor;
+    camera.position.y += (-mouseY * 0.08 - camera.position.y) * 0.025 * deltaFactor;
     camera.lookAt(scene.position);
 
     renderer.render(scene, camera);

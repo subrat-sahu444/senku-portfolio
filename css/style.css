@@ -2131,28 +2131,33 @@ pre code {
   left: 0;
   width: 6px;
   height: 6px;
+  margin-top: -3px;
+  margin-left: -3px;
   border-radius: 50%;
   background-color: var(--color-senku-green);
   box-shadow: 0 0 10px var(--color-senku-green), 0 0 20px var(--color-senku-green);
   pointer-events: none;
   z-index: 99999;
   transform: translate3d(-100px, -100px, 0);
-  transition: opacity 0.2s ease;
+  will-change: transform;
 }
 
 .cursor-ring {
   position: fixed;
-  top: -16px;
-  left: -16px;
+  top: 0;
+  left: 0;
   width: 32px;
   height: 32px;
+  margin-top: -16px;
+  margin-left: -16px;
   border-radius: 50%;
   border: 1.5px solid rgba(0, 217, 245, 0.6);
   pointer-events: none;
   z-index: 99998;
   transform: translate3d(-100px, -100px, 0);
-  transition: width 0.2s, height 0.2s, border-color 0.2s, background-color 0.2s;
+  transition: border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 0 15px rgba(0, 217, 245, 0.25);
+  will-change: transform;
 }
 
 .cursor-ring.cursor-hover {
@@ -2168,7 +2173,44 @@ pre code {
   border-radius: 50%;
   pointer-events: none;
   z-index: 99999;
+  will-change: transform, opacity;
 }
+
+/* Smooth Top Scroll Progress Bar */
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, #00f5a0 0%, #00d9f5 50%, #8b5cf6 100%);
+  box-shadow: 0 0 12px rgba(0, 245, 160, 0.8), 0 0 24px rgba(0, 217, 245, 0.5);
+  z-index: 10000;
+  pointer-events: none;
+  transform: translateZ(0);
+  will-change: width;
+}
+
+/* Smooth Fluid Scroll-Reveal (Framer-Motion Quality) */
+.reveal-init {
+  opacity: 0;
+  transform: translateY(28px) scale(0.98);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-init.is-revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Staggered Delay Helpers */
+.stagger-1 { transition-delay: 0.06s; }
+.stagger-2 { transition-delay: 0.12s; }
+.stagger-3 { transition-delay: 0.18s; }
+.stagger-4 { transition-delay: 0.24s; }
+.stagger-5 { transition-delay: 0.30s; }
+.stagger-6 { transition-delay: 0.36s; }
 
 /* 2. Matrix Glyphs Scramble Animation */
 .scramble-glyph {

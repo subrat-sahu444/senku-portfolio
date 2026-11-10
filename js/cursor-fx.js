@@ -1,6 +1,6 @@
 /* ==========================================================================
-   SCI-FI GLOWING CURSOR & SPARK BURST ENGINE
-   Smooth trailing targeting reticle + click spark physics for desktop
+   SCI-FI GLOWING CURSOR & SPARK BURST ENGINE (ULTRA-SMOOTH SPRING LERP)
+   High-performance subpixel reticle + click spark physics for desktop
    ========================================================================== */
 
 (function () {
@@ -19,45 +19,66 @@
   let mouseX = -100, mouseY = -100;
   let ringX = -100, ringY = -100;
   let isHovered = false;
+  let isMouseDown = false;
+  let currentScale = 1;
 
   window.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
+    // Immediate dot tracking with subpixel translate3d
     cursorDot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+  }, { passive: true });
+
+  window.addEventListener('mousedown', () => {
+    isMouseDown = true;
+  }, { passive: true });
+
+  window.addEventListener('mouseup', () => {
+    isMouseDown = false;
   }, { passive: true });
 
   // Spring physics loop for outer ring
   function renderCursor() {
-    ringX += (mouseX - ringX) * 0.18;
-    ringY += (mouseY - ringY) * 0.18;
+    // Smooth lerp (0.16)
+    ringX += (mouseX - ringX) * 0.16;
+    ringY += (mouseY - ringY) * 0.16;
 
-    const scale = isHovered ? 1.6 : 1;
-    cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) scale(${scale})`;
+    // Target scale with tactile click feedback
+    let targetScale = 1;
+    if (isMouseDown) {
+      targetScale = 0.8;
+    } else if (isHovered) {
+      targetScale = 1.6;
+    }
+
+    currentScale += (targetScale - currentScale) * 0.18;
+
+    cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) scale(${currentScale.toFixed(3)})`;
 
     requestAnimationFrame(renderCursor);
   }
   requestAnimationFrame(renderCursor);
 
   // Hover detection for interactive elements
-  const interactiveSelector = 'a, button, input, textarea, .glass-card, .bento-item, .project-card, .quick-chip, .filter-btn, .holo-card';
+  const interactiveSelector = 'a, button, input, textarea, .glass-card, .bento-item, .project-card, .quick-chip, .filter-btn, .holo-card, .nav-link, .core-mode-btn, .project-link-btn';
   document.addEventListener('mouseover', (e) => {
     if (e.target.closest(interactiveSelector)) {
       isHovered = true;
       cursorRing.classList.add('cursor-hover');
     }
-  });
+  }, { passive: true });
 
   document.addEventListener('mouseout', (e) => {
     if (e.target.closest(interactiveSelector)) {
       isHovered = false;
       cursorRing.classList.remove('cursor-hover');
     }
-  });
+  }, { passive: true });
 
   // Particle Spark Burst on Click
   window.addEventListener('click', (e) => {
     createSparkBurst(e.clientX, e.clientY);
-  });
+  }, { passive: true });
 
   function createSparkBurst(x, y) {
     const sparkCount = 8;
