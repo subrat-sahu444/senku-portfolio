@@ -226,7 +226,7 @@ class SenkuAI {
     this.chatBody.appendChild(msgDiv);
     this.chatBody.scrollTop = this.chatBody.scrollHeight;
 
-    // Attach copy button listeners on generated code blocks
+    // Attach copy & download listeners on generated code blocks
     msgDiv.querySelectorAll('.copy-code-btn').forEach((btn) => {
       btn.addEventListener('click', () => {
         const code = btn.closest('.msg-code-block').querySelector('code').innerText;
@@ -236,6 +236,27 @@ class SenkuAI {
             btn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy';
           }, 2000);
         });
+      });
+    });
+
+    msgDiv.querySelectorAll('.download-code-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const block = btn.closest('.msg-code-block');
+        const code = block.querySelector('code').innerText;
+        const lang = block.getAttribute('data-lang') || 'ts';
+        const blob = new Blob([code], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `senku_code_${Date.now()}.${lang === 'javascript' ? 'js' : lang === 'python' ? 'py' : lang === 'css' ? 'css' : 'ts'}`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Saved!';
+        setTimeout(() => {
+          btn.innerHTML = '<i class="fa-solid fa-file-arrow-down"></i> Save';
+        }, 2000);
       });
     });
   }
@@ -339,6 +360,37 @@ class SenkuAI {
         },
         content: "Here is a complete, production-grade **Autonomous Tool-Calling Agent Loop** implemented in TypeScript, featuring robust error containment and backoff:\n\n```typescript\ninterface AgentTool<TInput = any, TOutput = any> {\n  name: string;\n  description: string;\n  execute: (input: TInput) => Promise<TOutput>;\n}\n\ninterface AgentStep {\n  thought: string;\n  action?: { toolName: string; parameters: any };\n  finalAnswer?: string;\n}\n\nclass AntigravityAgent {\n  private tools = new Map<string, AgentTool>();\n\n  registerTool(tool: AgentTool): this {\n    this.tools.set(tool.name, tool);\n    return this;\n  }\n\n  async run(objective: string, maxIterations = 5): Promise<string> {\n    let iterations = 0;\n    const history: string[] = [`OBJECTIVE: ${objective}`];\n\n    while (iterations < maxIterations) {\n      iterations++;\n      \n      // 1. DeepMind Reasoning Step\n      const step = await this.reasonNextStep(history);\n      console.log(`[Iteration ${iterations}] Thought: ${step.thought}`);\n\n      if (step.finalAnswer) {\n        return step.finalAnswer;\n      }\n\n      // 2. Empirical Tool Execution\n      if (step.action) {\n        const tool = this.tools.get(step.action.toolName);\n        if (!tool) throw new Error(`Unknown tool: ${step.action.toolName}`);\n        \n        try {\n          const result = await tool.execute(step.action.parameters);\n          history.push(`Tool [${tool.name}] Output: ${JSON.stringify(result)}`);\n        } catch (err) {\n          history.push(`Tool [${tool.name}] Error: ${(err as Error).message}`);\n        }\n      }\n    }\n\n    throw new Error('Agent reached maximum iteration bounds without terminal state.');\n  }\n\n  private async reasonNextStep(history: string[]): Promise<AgentStep> {\n    // In production, invoke Gemini Flash 2.5 / 3.8 model with structured tool declarations\n    return {\n      thought: 'Scientific evidence acquired. Synthesizing optimal answer.',\n      finalAnswer: 'Execution completed with 10 billion percent certainty.'\n    };\n  }\n}\n```\n\nClean, fully typed, resilient against runtime crashes, and directly aligned with DeepMind's agentic execution standards!"
       };
+    }
+
+    // 6.5 Resume / CV / Dossier
+    if (q.includes('cv') || q.includes('resume') || q.includes('dossier') || (q.includes('download') && !q.includes('code'))) {
+      return {
+        thought: {
+          deconstruction: "User requested Subrat's comprehensive technical resume and qualifications.",
+          strategy: "Synthesize key career milestones and offer the direct Markdown Dossier download trigger.",
+          verification: "Verify that downloadSubratDossier function is globally linked."
+        },
+        content: "Kukuku! Here is the official technical dossier for **Subrat Sahu**:\n\n- **Role**: Full-Stack Software Engineer & AI System Architect\n- **Production Systems**: Project Senku, Aether 3D Web Studio, ChronoLogic OS, HyperFlux\n- **Core Stack**: TypeScript, Python, Three.js, React, Gemini API, Docker, Rust\n\nYou can click the button below or type `download-cv` in the terminal to save it directly to your device:\n\n<button class=\"btn-glass-primary\" style=\"margin-top:0.8rem;\" onclick=\"downloadSubratDossier()\"><i class=\"fa-solid fa-file-arrow-down\"></i> Download Official Dossier (.md)</button>"
+      };
+    }
+
+    // 6.6 Real-Time Scientific Math & Formulas
+    if (q.startsWith('calc ') || q.startsWith('calculate ') || q.startsWith('math ') || /^[0-9+\-*/^().\s]{3,}$/.test(rawQuery.trim())) {
+      try {
+        const expr = rawQuery.replace(/^(calc|calculate|math)\s+/i, '').replace(/\^/g, '**');
+        const sanitized = expr.replace(/[^0-9+\-*/(). ]/g, '');
+        if (sanitized.trim()) {
+          const evaluated = Function(`'use strict'; return (${sanitized})`)();
+          return {
+            thought: {
+              deconstruction: `Mathematical calculation parsed: ${sanitized}`,
+              strategy: "Evaluate via first-principles arithmetic and verify precision.",
+              verification: "Confirmed finite numerical result."
+            },
+            content: `### 🧪 Scientific Calculation Complete:\n\n- **Formula**: \`${sanitized}\`\n- **Result**: **\`${evaluated}\`**\n\nTen billion percent mathematically verified!`
+          };
+        }
+      } catch (err) {}
     }
 
     // 7. Collaboration / Contact
@@ -457,13 +509,17 @@ YOUR COGNITIVE OPERATING PRINCIPLES:
   }
 
   formatMarkdown(content) {
-    // 1. Code blocks
+    // 1. Code blocks with Copy and Download Actions
     content = content.replace(/```([a-zA-Z0-9]*)\n([\s\S]*?)```/g, (match, lang, code) => {
+      const cleanLang = (lang || 'ts').toLowerCase();
       return `
-        <div class="msg-code-block">
+        <div class="msg-code-block" data-lang="${cleanLang}">
           <div class="code-header">
-            <span><i class="fa-solid fa-code"></i> ${lang || 'code'}</span>
-            <button class="copy-code-btn"><i class="fa-regular fa-copy"></i> Copy</button>
+            <span><i class="fa-solid fa-code"></i> ${cleanLang}</span>
+            <div style="display:flex;gap:0.5rem;">
+              <button class="download-code-btn" style="background:none;border:none;color:var(--color-senku-cyan);cursor:pointer;font-family:var(--font-code);font-size:0.75rem;"><i class="fa-solid fa-file-arrow-down"></i> Save</button>
+              <button class="copy-code-btn"><i class="fa-regular fa-copy"></i> Copy</button>
+            </div>
           </div>
           <pre><code>${this.escapeHtml(code.trim())}</code></pre>
         </div>

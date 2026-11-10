@@ -268,6 +268,42 @@
     targetRotationX = (mouseY / windowHalfY) * 0.3;
   }
 
+  let current3DMode = 'crystal';
+  let speedMultiplier = 1;
+
+  window.setThreeCoreMode = function(mode) {
+    current3DMode = mode;
+    if (window.soundEngine) window.soundEngine.playActivate();
+
+    if (!innerCrystal || !outerCage || !ring1 || !ring2) return;
+
+    if (mode === 'crystal') {
+      speedMultiplier = 1;
+      innerCrystal.material.wireframe = false;
+      innerCrystal.material.emissive.setHex(0x00f5a0);
+      innerCrystal.material.emissiveIntensity = 0.35;
+      outerCage.visible = true;
+      ring1.material.color.setHex(0x00f5a0);
+      ring2.material.color.setHex(0x8b5cf6);
+    } else if (mode === 'lattice') {
+      speedMultiplier = 1.4;
+      innerCrystal.material.wireframe = true;
+      innerCrystal.material.emissive.setHex(0x00d9f5);
+      innerCrystal.material.emissiveIntensity = 0.6;
+      outerCage.visible = true;
+      ring1.material.color.setHex(0x00d9f5);
+      ring2.material.color.setHex(0x00f5a0);
+    } else if (mode === 'hyper') {
+      speedMultiplier = 2.5;
+      innerCrystal.material.wireframe = false;
+      innerCrystal.material.emissive.setHex(0x8b5cf6);
+      innerCrystal.material.emissiveIntensity = 0.85;
+      outerCage.visible = true;
+      ring1.material.color.setHex(0xec4899);
+      ring2.material.color.setHex(0x00f5a0);
+    }
+  };
+
   function animate() {
     requestAnimationFrame(animate);
 
@@ -276,8 +312,8 @@
 
     // 1. Constellation slow rotation
     if (particleSystem) {
-      particleSystem.rotation.y = elapsedTime * 0.04;
-      particleSystem.rotation.x = elapsedTime * 0.02;
+      particleSystem.rotation.y = elapsedTime * (0.04 * speedMultiplier);
+      particleSystem.rotation.x = elapsedTime * (0.02 * speedMultiplier);
     }
 
     // 2. Senku Hero Core scientific dynamics
@@ -291,22 +327,22 @@
 
       // Internal component rotations
       if (innerCrystal) {
-        innerCrystal.rotation.x += 0.008;
-        innerCrystal.rotation.y += 0.012;
+        innerCrystal.rotation.x += 0.008 * speedMultiplier;
+        innerCrystal.rotation.y += 0.012 * speedMultiplier;
       }
 
       if (outerCage) {
-        outerCage.rotation.x -= 0.005;
-        outerCage.rotation.z += 0.007;
+        outerCage.rotation.x -= 0.005 * speedMultiplier;
+        outerCage.rotation.z += 0.007 * speedMultiplier;
       }
 
       if (ring1) {
-        ring1.rotation.z += 0.015;
+        ring1.rotation.z += 0.015 * speedMultiplier;
       }
 
       if (ring2) {
-        ring2.rotation.x += 0.01;
-        ring2.rotation.y -= 0.012;
+        ring2.rotation.x += 0.01 * speedMultiplier;
+        ring2.rotation.y -= 0.012 * speedMultiplier;
       }
     }
 

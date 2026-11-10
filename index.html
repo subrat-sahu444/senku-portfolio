@@ -60,6 +60,10 @@
           <button class="icon-btn" id="soundToggleNav" title="Toggle Sound FX">
             <i class="fa-solid fa-volume-high"></i>
           </button>
+
+          <button class="icon-btn" data-download-dossier title="Download Subrat's Dossier (.md)">
+            <i class="fa-solid fa-file-arrow-down"></i>
+          </button>
           
           <button class="btn-glass-primary" data-open-senku>
             <i class="fa-solid fa-microchip"></i>
@@ -89,7 +93,7 @@
               </div>
 
               <h1 class="hero-title">
-                Architecting the Future with <span class="text-gradient">Code & Science</span>
+                Architecting the Future with <span class="text-gradient scramble-on-hover">Code & Science</span>
               </h1>
 
               <p class="hero-description">
@@ -100,6 +104,11 @@
                 <button class="btn-glass-primary" data-open-senku>
                   <i class="fa-solid fa-atom"></i>
                   <span>Consult Senku AI</span>
+                </button>
+
+                <button class="btn-glass-secondary" data-download-dossier>
+                  <i class="fa-solid fa-file-arrow-down"></i>
+                  <span>Download Dossier</span>
                 </button>
 
                 <a href="#projects" class="btn-glass-secondary">
@@ -171,6 +180,22 @@
                     <span style="color:var(--color-senku-green);font-family:var(--font-code);">ONLINE</span>
                   </div>
                 </div>
+
+                <!-- 3D Core Mode Switcher Dock -->
+                <div style="display:flex;justify-content:center;margin-top:1.25rem;">
+                  <div class="core-mode-dock">
+                    <button class="core-mode-btn active" data-core-mode="crystal" title="Crystal Core Mode">
+                      <i class="fa-solid fa-gem"></i> Crystal
+                    </button>
+                    <button class="core-mode-btn" data-core-mode="lattice" title="Neural Lattice Mode">
+                      <i class="fa-solid fa-network-wired"></i> Lattice
+                    </button>
+                    <button class="core-mode-btn" data-core-mode="hyper" title="Hyperdrive Mode">
+                      <i class="fa-solid fa-bolt"></i> Hyperdrive
+                    </button>
+                  </div>
+                </div>
+
               </div>
             </div>
 
@@ -403,6 +428,7 @@
                 <div class="project-footer">
                   <span class="text-mono" style="font-size:0.8rem;color:var(--color-senku-green)">STATUS: PRODUCTION</span>
                   <div class="project-links">
+                    <button class="project-link-btn" title="Inspect Blueprint" data-inspect-project="senku-engine"><i class="fa-solid fa-layer-group"></i></button>
                     <a href="#senku" class="project-link-btn" title="Inspect with Senku" data-open-senku><i class="fa-solid fa-atom"></i></a>
                     <a href="https://github.com" target="_blank" rel="noopener" class="project-link-btn" title="GitHub Source"><i class="fa-brands fa-github"></i></a>
                   </div>
@@ -430,6 +456,7 @@
                 <div class="project-footer">
                   <span class="text-mono" style="font-size:0.8rem;color:var(--color-senku-cyan)">STATUS: ACTIVE LAB</span>
                   <div class="project-links">
+                    <button class="project-link-btn" title="Inspect Blueprint" data-inspect-project="aether-studio"><i class="fa-solid fa-layer-group"></i></button>
                     <a href="#terminal" class="project-link-btn" title="View in CLI"><i class="fa-solid fa-terminal"></i></a>
                     <a href="https://github.com" target="_blank" rel="noopener" class="project-link-btn" title="GitHub Source"><i class="fa-brands fa-github"></i></a>
                   </div>
@@ -457,6 +484,7 @@
                 <div class="project-footer">
                   <span class="text-mono" style="font-size:0.8rem;color:var(--color-senku-purple)">STATUS: BETA v2.4</span>
                   <div class="project-links">
+                    <button class="project-link-btn" title="Inspect Blueprint" data-inspect-project="chronologic-os"><i class="fa-solid fa-layer-group"></i></button>
                     <a href="#senku" class="project-link-btn" title="Ask Senku" data-open-senku><i class="fa-solid fa-atom"></i></a>
                     <a href="https://github.com" target="_blank" rel="noopener" class="project-link-btn" title="GitHub Source"><i class="fa-brands fa-github"></i></a>
                   </div>
@@ -484,6 +512,7 @@
                 <div class="project-footer">
                   <span class="text-mono" style="font-size:0.8rem;color:var(--color-senku-green)">STATUS: PRODUCTION</span>
                   <div class="project-links">
+                    <button class="project-link-btn" title="Inspect Blueprint" data-inspect-project="omnisynth"><i class="fa-solid fa-layer-group"></i></button>
                     <a href="#senku" class="project-link-btn" title="Ask Senku" data-open-senku><i class="fa-solid fa-atom"></i></a>
                     <a href="https://github.com" target="_blank" rel="noopener" class="project-link-btn" title="GitHub Source"><i class="fa-brands fa-github"></i></a>
                   </div>
@@ -511,6 +540,7 @@
                 <div class="project-footer">
                   <span class="text-mono" style="font-size:0.8rem;color:var(--color-senku-cyan)">STATUS: SCALED</span>
                   <div class="project-links">
+                    <button class="project-link-btn" title="Inspect Blueprint" data-inspect-project="hyperflux-mesh"><i class="fa-solid fa-layer-group"></i></button>
                     <a href="#senku" class="project-link-btn" title="Ask Senku" data-open-senku><i class="fa-solid fa-atom"></i></a>
                     <a href="https://github.com" target="_blank" rel="noopener" class="project-link-btn" title="GitHub Source"><i class="fa-brands fa-github"></i></a>
                   </div>
@@ -538,6 +568,7 @@
                 <div class="project-footer">
                   <span class="text-mono" style="font-size:0.8rem;color:var(--color-senku-purple)">STATUS: ACTIVE LAB</span>
                   <div class="project-links">
+                    <button class="project-link-btn" title="Inspect Blueprint" data-inspect-project="biosynth"><i class="fa-solid fa-layer-group"></i></button>
                     <a href="#terminal" class="project-link-btn" title="View in CLI"><i class="fa-solid fa-terminal"></i></a>
                     <a href="https://github.com" target="_blank" rel="noopener" class="project-link-btn" title="GitHub Source"><i class="fa-brands fa-github"></i></a>
                   </div>
@@ -831,6 +862,16 @@
       </div>
     </div>
 
+    <!-- Project Architecture Blueprint Modal -->
+    <div class="project-modal-overlay" id="projectModal">
+      <div class="project-modal-dialog glass-panel">
+        <button class="icon-btn project-modal-close" id="closeProjectModal" title="Close Blueprint">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div id="projectModalContent"></div>
+      </div>
+    </div>
+
     <!-- Notification Toast -->
     <div class="toast-notice" id="toastNotice">
       <i class="fa-solid fa-circle-check" style="color:var(--color-senku-green)"></i>
@@ -846,6 +887,10 @@
   <script src="js/audio-fx.js"></script>
   <script src="js/three-scene.js"></script>
   <script src="js/tilt-3d.js"></script>
+  <script src="js/cursor-fx.js"></script>
+  <script src="js/scramble-text.js"></script>
+  <script src="js/project-modal.js"></script>
+  <script src="js/dossier-download.js"></script>
   <script src="js/senku-ai.js"></script>
   <script src="js/terminal.js"></script>
   <script src="js/main.js"></script>

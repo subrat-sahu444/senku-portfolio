@@ -250,4 +250,20 @@ document.addEventListener('DOMContentLoaded', () => {
       if (window.soundEngine) window.soundEngine.playClick();
     });
   });
+
+  // 8. 3D Holographic Core Mode Switcher
+  const coreModeBtns = document.querySelectorAll('[data-core-mode]');
+  coreModeBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const mode = btn.getAttribute('data-core-mode');
+      coreModeBtns.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      if (typeof window.setThreeCoreMode === 'function') {
+        window.setThreeCoreMode(mode);
+      }
+      if (window.soundEngine) window.soundEngine.playActivate();
+      showToast(`⚡ 3D Core transitioned to ${mode.toUpperCase()} mode.`);
+    });
+  });
 });

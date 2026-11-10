@@ -21,6 +21,9 @@
   <span style="color:var(--color-senku-cyan)">senku &lt;q&gt;</span>   - Query the Senku AI engine directly
   <span style="color:var(--color-senku-cyan)">skills</span>      - Render technical skill matrix & telemetry
   <span style="color:var(--color-senku-cyan)">projects</span>    - Enumerate active showcase projects
+  <span style="color:var(--color-senku-cyan)">mode &lt;m&gt;</span>    - Switch 3D Hero Core (crystal, lattice, hyper)
+  <span style="color:var(--color-senku-cyan)">calc &lt;expr&gt;</span> - Evaluate scientific arithmetic expression
+  <span style="color:var(--color-senku-cyan)">download-cv</span> - Generate and download Subrat's Dossier (.md)
   <span style="color:var(--color-senku-cyan)">formula</span>     - Display the scientific synthesis formula
   <span style="color:var(--color-senku-cyan)">audio</span>       - Toggle UI sound synthesizer
   <span style="color:var(--color-senku-cyan)">matrix</span>      - Initiate visual matrix stream
@@ -74,6 +77,13 @@ Or submit via the Glassmorphic Transmission Portal below!
     clear: () => {
       terminalScreen.innerHTML = '';
       return '';
+    },
+    'download-cv': () => {
+      if (typeof downloadSubratDossier === 'function') {
+        downloadSubratDossier();
+        return `<span style="color:var(--color-senku-green)">[DOSSIER DISPATCHED] Subrat_Sahu_AI_Engineer_Dossier.md generated and downloaded.</span>`;
+      }
+      return 'Dossier module loading...';
     },
     matrix: () => {
       let count = 0;
@@ -129,6 +139,28 @@ Or submit via the Glassmorphic Transmission Portal below!
         } else {
           result = `<span style="color:var(--color-senku-green)">SENKU AI:</span> Processing query...`;
         }
+      }
+    } else if (cmd === 'mode') {
+      const mode = (args || '').toLowerCase().trim();
+      if (['crystal', 'lattice', 'hyper'].includes(mode)) {
+        if (typeof window.setThreeCoreMode === 'function') {
+          window.setThreeCoreMode(mode);
+          result = `<span style="color:var(--color-senku-green)">[3D CORE MODIFIED]</span> Hero 3D mode morphed to: <strong style="color:var(--color-senku-cyan)">${mode.toUpperCase()}</strong>`;
+        }
+      } else {
+        result = `<span style="color:#f59e0b">Usage: mode &lt;crystal | lattice | hyper&gt;</span>`;
+      }
+    } else if (cmd === 'calc') {
+      try {
+        const sanitized = args.replace(/[^0-9+\-*/(). ^]/g, '').replace(/\^/g, '**');
+        if (sanitized) {
+          const val = Function(`'use strict'; return (${sanitized})`)();
+          result = `<span style="color:var(--color-senku-green)">[EVALUATED]</span> ${escapeHtml(args)} = <strong style="color:var(--color-senku-cyan)">${val}</strong>`;
+        } else {
+          result = `<span style="color:#f59e0b">Usage: calc &lt;expression&gt; (e.g. calc 2^10 + 50)</span>`;
+        }
+      } catch (e) {
+        result = `<span style="color:#ef4444">Math parse error. Check formula syntax.</span>`;
       }
     } else if (commands[cmd]) {
       result = commands[cmd]();
