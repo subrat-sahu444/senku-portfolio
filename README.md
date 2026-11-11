@@ -40,13 +40,13 @@ A futuristic, high-performance personal portfolio website built with modern **Gl
 You can open `index.html` directly in any modern browser:
 ```bash
 # Windows File Explorer / Run
-start C:\Users\subra\.gemini\antigravity\scratch\senku-portfolio\index.html
+start C:\subrat\senku-portfolio
 ```
 
 ### Option 2: Run with Local Development Server
 From the project folder:
 ```powershell
-cd C:\Users\subra\.gemini\antigravity\scratch\senku-portfolio
+cd C:\subrat\senku-portfolio
 npm start
 ```
 Then navigate to `http://localhost:3000` in your browser.
