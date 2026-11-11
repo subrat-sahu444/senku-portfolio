@@ -77,11 +77,49 @@
       </nav>
     </header>
 
+    <!-- Futuristic Sci-Fi Live HUD Telemetry Strip -->
+    <div class="hud-telemetry-strip">
+      <div class="hud-telemetry-inner">
+        <div class="hud-telemetry-item">
+          <span class="hud-pulse-dot"></span>
+          <span class="hud-label">COGNITIVE KERNEL:</span>
+          <span class="hud-val" style="color:var(--color-senku-green)">DEEPMIND ANTIGRAVITY v3.8</span>
+        </div>
+        <div class="hud-telemetry-separator">//</div>
+        <div class="hud-telemetry-item">
+          <i class="fa-solid fa-satellite-dish" style="color:var(--color-senku-cyan)"></i>
+          <span class="hud-label">GEO-LOCK:</span>
+          <span class="hud-val">LAT 28.6139° N / LNG 77.2090° E</span>
+        </div>
+        <div class="hud-telemetry-separator">//</div>
+        <div class="hud-telemetry-item">
+          <i class="fa-solid fa-gauge-high" style="color:var(--color-senku-purple)"></i>
+          <span class="hud-label">RENDER FPS:</span>
+          <span class="hud-val" style="color:var(--color-senku-cyan)" id="liveFpsCounter">60 FPS</span>
+        </div>
+        <div class="hud-telemetry-separator">//</div>
+        <div class="hud-telemetry-item">
+          <i class="fa-solid fa-atom" style="color:var(--color-senku-green)"></i>
+          <span class="hud-label">NEURAL PARTICLES:</span>
+          <span class="hud-val" style="color:var(--color-senku-green)" id="liveParticleCount">850 NODES</span>
+        </div>
+        <div class="hud-telemetry-separator">//</div>
+        <div class="hud-telemetry-item">
+          <div class="hud-equalizer-bars">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <span class="hud-label">AUDIO SYNTH:</span>
+          <span class="hud-val" style="color:var(--color-senku-green)" id="hudAudioStatus">ACTIVE</span>
+        </div>
+      </div>
+    </div>
+
     <main>
       <!-- =================================================================
            HERO SECTION: Personal Intro & 3D Holographic Showcase
            ================================================================= -->
       <section class="hero-section" id="hero">
+        <div class="cyber-grid-floor"></div>
         <div class="container">
           <div class="hero-grid">
             
@@ -151,6 +189,7 @@
 
                 <!-- Main Glass Hologram Card -->
                 <div class="holo-card glass-panel glass-shimmer">
+                  <div class="holo-scanline"></div>
                   <div class="holo-avatar-wrap">
                     <div class="holo-avatar-ring"></div>
                     <div class="holo-avatar-ring-2"></div>

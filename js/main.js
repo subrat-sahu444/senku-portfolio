@@ -244,11 +244,14 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('scroll', checkMetrics, { passive: true });
   checkMetrics();
 
-  // 7. Click Sound FX on interactive buttons
-  document.querySelectorAll('.btn-glass-primary, .btn-glass-secondary, .social-pill, .tech-chip').forEach((el) => {
+  // 7. Click & Hover Sound FX on interactive buttons
+  document.querySelectorAll('.btn-glass-primary, .btn-glass-secondary, .social-pill, .tech-chip, .filter-btn, .core-mode-btn').forEach((el) => {
     el.addEventListener('click', () => {
       if (window.soundEngine) window.soundEngine.playClick();
     });
+    el.addEventListener('mouseenter', () => {
+      if (window.soundEngine) window.soundEngine.playLaserHover();
+    }, { passive: true });
   });
 
   // 8. 3D Holographic Core Mode Switcher

@@ -2360,3 +2360,143 @@ pre code {
     padding: 1.6rem 1.2rem;
   }
 }
+
+/* ==========================================================================
+   SCIENTIFIC CYBERNETIC HUD & AESTHETIC VISUAL EFFECTS
+   ========================================================================== */
+
+/* 1. Futuristic Sci-Fi Live HUD Telemetry Strip */
+.hud-telemetry-strip {
+  width: 100%;
+  background: rgba(6, 9, 19, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(0, 245, 160, 0.18);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  padding: 0.45rem 1.5rem;
+  font-family: var(--font-code);
+  font-size: 0.72rem;
+  color: #94a3b8;
+  letter-spacing: 0.05em;
+  position: relative;
+  z-index: 99;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.hud-telemetry-inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.hud-telemetry-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.hud-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-senku-green);
+  box-shadow: 0 0 10px var(--color-senku-green);
+  animation: hudPulse 1.8s infinite;
+}
+
+@keyframes hudPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.4; }
+}
+
+.hud-label {
+  color: #64748b;
+  font-size: 0.68rem;
+  font-weight: 500;
+}
+
+.hud-val {
+  color: #f1f5f9;
+  font-weight: 600;
+}
+
+.hud-telemetry-separator {
+  color: rgba(0, 245, 160, 0.25);
+  flex-shrink: 0;
+}
+
+.hud-equalizer-bars {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 12px;
+}
+
+.hud-equalizer-bars span {
+  width: 2px;
+  background: var(--color-senku-green);
+  border-radius: 1px;
+  animation: eqBounce 1.2s ease-in-out infinite alternate;
+}
+
+.hud-equalizer-bars span:nth-child(1) { height: 40%; animation-delay: 0.1s; }
+.hud-equalizer-bars span:nth-child(2) { height: 90%; animation-delay: 0.3s; }
+.hud-equalizer-bars span:nth-child(3) { height: 60%; animation-delay: 0.15s; }
+.hud-equalizer-bars span:nth-child(4) { height: 100%; animation-delay: 0.4s; }
+.hud-equalizer-bars span:nth-child(5) { height: 50%; animation-delay: 0.25s; }
+
+@keyframes eqBounce {
+  0% { transform: scaleY(0.3); }
+  100% { transform: scaleY(1); }
+}
+
+/* 2. 3D Cybernetic Grid Floor in Hero */
+.cyber-grid-floor {
+  position: absolute;
+  bottom: -40px;
+  left: 0;
+  width: 100%;
+  height: 380px;
+  background-image: 
+    linear-gradient(rgba(0, 245, 160, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 217, 245, 0.09) 1px, transparent 1px);
+  background-size: 45px 45px;
+  transform: perspective(500px) rotateX(65deg);
+  transform-origin: bottom center;
+  pointer-events: none;
+  z-index: 0;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 100%, black 15%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 100%, black 15%, transparent 75%);
+  animation: cyberGridDrift 22s linear infinite;
+}
+
+@keyframes cyberGridDrift {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 45px; }
+}
+
+/* 3. Laser Scanline Animation for Hero Holo Card */
+.holo-scanline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(0, 245, 160, 0.8), rgba(0, 217, 245, 0.9), transparent);
+  box-shadow: 0 0 15px rgba(0, 245, 160, 0.8), 0 0 30px rgba(0, 217, 245, 0.5);
+  pointer-events: none;
+  z-index: 5;
+  animation: laserScan 4.5s ease-in-out infinite;
+}
+
+@keyframes laserScan {
+  0% { top: 0%; opacity: 0; }
+  15% { opacity: 1; }
+  85% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}

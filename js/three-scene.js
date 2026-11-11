@@ -1,11 +1,11 @@
 /* ==========================================================================
    THREE.JS 3D SCIENTIFIC VISUALIZATION & BACKGROUND
-   Interactive 3D particle constellation + glowing scientific core
+   Interactive 3D particle constellation + neural plexus + glowing scientific core
    ========================================================================== */
 
 (function () {
   let scene, camera, renderer;
-  let particleSystem, heroCoreGroup, innerCrystal, outerCage, ring1, ring2;
+  let particleSystem, neuralPlexus, heroCoreGroup, innerCrystal, outerCage, ring1, ring2, ring3;
   let mouseX = 0, mouseY = 0;
   let targetRotationX = 0, targetRotationY = 0;
   let windowHalfX = window.innerWidth / 2;
@@ -13,6 +13,8 @@
   let isDragging = false;
   let previousMousePosition = { x: 0, y: 0 };
   let clock;
+  let frameCount = 0;
+  let lastFpsUpdateTime = 0;
 
   function initThree() {
     const canvas = document.getElementById('webgl-canvas');
@@ -22,7 +24,7 @@
 
     // Scene
     scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x060913, 0.0012);
+    scene.fog = new THREE.FogExp2(0x060913, 0.0011);
 
     // Camera
     camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 3000);
@@ -57,7 +59,10 @@
     // 1. Create Scientific 3D Constellation Particles
     createParticles();
 
-    // 2. Create Senku Formula 3D Hero Core (Nested Gyro & Crystal)
+    // 2. Create Holographic Connected Neural Plexus
+    createNeuralPlexus();
+
+    // 3. Create Senku Formula 3D Hero Core (Nested Gyro, Reticle & Crystal)
     createHeroCore();
 
     // Event Listeners
@@ -106,7 +111,6 @@
     const color3 = new THREE.Color(0x8b5cf6); // Purple Cosmic
 
     for (let i = 0; i < particleCount * 3; i += 3) {
-      // Cylindrical / volumetric distribution
       const radius = 600 + Math.random() * 1100;
       const theta = Math.random() * Math.PI * 2;
       const phi = (Math.random() - 0.5) * Math.PI;
@@ -115,7 +119,6 @@
       positions[i + 1] = radius * Math.sin(phi);
       positions[i + 2] = radius * Math.cos(phi) * Math.cos(theta);
 
-      // Color variation
       const mixRatio = Math.random();
       let pColor;
       if (mixRatio < 0.45) {
@@ -134,7 +137,6 @@
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
-    // Particle sprite using canvas
     const particleTexture = createParticleTexture();
 
     const material = new THREE.PointsMaterial({
@@ -144,11 +146,55 @@
       vertexColors: true,
       blending: THREE.AdditiveBlending,
       depthWrite: false,
-      opacity: 0.8
+      opacity: 0.82
     });
 
     particleSystem = new THREE.Points(geometry, material);
     scene.add(particleSystem);
+
+    const particleEl = document.getElementById('liveParticleCount');
+    if (particleEl) {
+      particleEl.innerText = `${particleCount} NODES`;
+    }
+  }
+
+  function createNeuralPlexus() {
+    const nodeCount = window.innerWidth < 768 ? 25 : 55;
+    const pointsArray = [];
+
+    for (let i = 0; i < nodeCount; i++) {
+      pointsArray.push(new THREE.Vector3(
+        (Math.random() - 0.5) * 850,
+        (Math.random() - 0.5) * 650,
+        (Math.random() - 0.5) * 500
+      ));
+    }
+
+    const linePositions = [];
+    const maxDist = 175;
+
+    for (let i = 0; i < nodeCount; i++) {
+      for (let j = i + 1; j < nodeCount; j++) {
+        const dist = pointsArray[i].distanceTo(pointsArray[j]);
+        if (dist < maxDist) {
+          linePositions.push(pointsArray[i].x, pointsArray[i].y, pointsArray[i].z);
+          linePositions.push(pointsArray[j].x, pointsArray[j].y, pointsArray[j].z);
+        }
+      }
+    }
+
+    const lineGeometry = new THREE.BufferGeometry();
+    lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
+
+    const lineMaterial = new THREE.LineBasicMaterial({
+      color: 0x00f5a0,
+      transparent: true,
+      opacity: 0.22,
+      blending: THREE.AdditiveBlending
+    });
+
+    neuralPlexus = new THREE.LineSegments(lineGeometry, lineMaterial);
+    scene.add(neuralPlexus);
   }
 
   function createParticleTexture() {
@@ -179,12 +225,12 @@
     const crystalMat = new THREE.MeshPhongMaterial({
       color: 0x052e16,
       emissive: 0x00f5a0,
-      emissiveIntensity: 0.35,
+      emissiveIntensity: 0.38,
       specular: 0xffffff,
-      shininess: 90,
+      shininess: 95,
       flatShading: true,
       transparent: true,
-      opacity: 0.85
+      opacity: 0.88
     });
     innerCrystal = new THREE.Mesh(crystalGeo, crystalMat);
     heroCoreGroup.add(innerCrystal);
@@ -195,7 +241,7 @@
       color: 0x00d9f5,
       wireframe: true,
       transparent: true,
-      opacity: 0.35
+      opacity: 0.38
     });
     outerCage = new THREE.Mesh(cageGeo, cageMat);
     heroCoreGroup.add(outerCage);
@@ -205,7 +251,7 @@
     const ring1Mat = new THREE.MeshBasicMaterial({
       color: 0x00f5a0,
       transparent: true,
-      opacity: 0.6
+      opacity: 0.65
     });
     ring1 = new THREE.Mesh(ring1Geo, ring1Mat);
     ring1.rotation.x = Math.PI / 3;
@@ -216,11 +262,22 @@
     const ring2Mat = new THREE.MeshBasicMaterial({
       color: 0x8b5cf6,
       transparent: true,
-      opacity: 0.5
+      opacity: 0.55
     });
     ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
     ring2.rotation.y = Math.PI / 4;
     heroCoreGroup.add(ring2);
+
+    // Orbiting Outer Sci-Fi HUD Ring 3
+    const ring3Geo = new THREE.TorusGeometry(205, 1.2, 16, 120);
+    const ring3Mat = new THREE.MeshBasicMaterial({
+      color: 0x00d9f5,
+      transparent: true,
+      opacity: 0.45
+    });
+    ring3 = new THREE.Mesh(ring3Geo, ring3Mat);
+    ring3.rotation.z = Math.PI / 6;
+    heroCoreGroup.add(ring3);
 
     // Position in right-side 3D space
     positionHeroCore();
@@ -231,19 +288,15 @@
     if (!heroCoreGroup) return;
     const w = window.innerWidth;
     if (w >= 1200) {
-      // Large Desktop: right hero visual
       heroCoreGroup.position.set(380, 40, 250);
       heroCoreGroup.scale.set(1.15, 1.15, 1.15);
     } else if (w >= 1024) {
-      // Laptop / Small Desktop
       heroCoreGroup.position.set(310, 30, 200);
       heroCoreGroup.scale.set(0.95, 0.95, 0.95);
     } else if (w >= 640) {
-      // Tablet: centered gently behind
       heroCoreGroup.position.set(0, 90, 80);
       heroCoreGroup.scale.set(0.75, 0.75, 0.75);
     } else {
-      // Mobile / Smartphone: ambient background core
       heroCoreGroup.position.set(0, -60, -50);
       heroCoreGroup.scale.set(0.5, 0.5, 0.5);
     }
@@ -275,32 +328,35 @@
     current3DMode = mode;
     if (window.soundEngine) window.soundEngine.playActivate();
 
-    if (!innerCrystal || !outerCage || !ring1 || !ring2) return;
+    if (!innerCrystal || !outerCage || !ring1 || !ring2 || !ring3) return;
 
     if (mode === 'crystal') {
       speedMultiplier = 1;
       innerCrystal.material.wireframe = false;
       innerCrystal.material.emissive.setHex(0x00f5a0);
-      innerCrystal.material.emissiveIntensity = 0.35;
+      innerCrystal.material.emissiveIntensity = 0.38;
       outerCage.visible = true;
       ring1.material.color.setHex(0x00f5a0);
       ring2.material.color.setHex(0x8b5cf6);
+      ring3.material.color.setHex(0x00d9f5);
     } else if (mode === 'lattice') {
       speedMultiplier = 1.4;
       innerCrystal.material.wireframe = true;
       innerCrystal.material.emissive.setHex(0x00d9f5);
-      innerCrystal.material.emissiveIntensity = 0.6;
+      innerCrystal.material.emissiveIntensity = 0.65;
       outerCage.visible = true;
       ring1.material.color.setHex(0x00d9f5);
       ring2.material.color.setHex(0x00f5a0);
+      ring3.material.color.setHex(0x8b5cf6);
     } else if (mode === 'hyper') {
       speedMultiplier = 2.5;
       innerCrystal.material.wireframe = false;
       innerCrystal.material.emissive.setHex(0x8b5cf6);
-      innerCrystal.material.emissiveIntensity = 0.85;
+      innerCrystal.material.emissiveIntensity = 0.9;
       outerCage.visible = true;
       ring1.material.color.setHex(0xec4899);
       ring2.material.color.setHex(0x00f5a0);
+      ring3.material.color.setHex(0xf59e0b);
     }
   };
 
@@ -309,9 +365,20 @@
 
     const delta = clock.getDelta();
     const elapsedTime = clock.getElapsedTime();
-    // Normalize to 60fps delta baseline for consistent silky motion across 60Hz/120Hz/144Hz screens
     const deltaFactor = Math.min(delta * 60, 2.0);
     const motionFactor = deltaFactor * speedMultiplier;
+
+    // Track live rendering FPS for HUD Telemetry
+    frameCount++;
+    if (elapsedTime - lastFpsUpdateTime > 0.5) {
+      const fps = Math.round(frameCount / (elapsedTime - lastFpsUpdateTime));
+      const fpsEl = document.getElementById('liveFpsCounter');
+      if (fpsEl) {
+        fpsEl.innerText = `${Math.min(fps, 144)} FPS`;
+      }
+      frameCount = 0;
+      lastFpsUpdateTime = elapsedTime;
+    }
 
     // 1. Constellation slow rotation
     if (particleSystem) {
@@ -319,16 +386,19 @@
       particleSystem.rotation.x = elapsedTime * (0.02 * speedMultiplier);
     }
 
-    // 2. Senku Hero Core scientific dynamics
+    // 2. Holographic Neural Plexus rotation
+    if (neuralPlexus) {
+      neuralPlexus.rotation.y = -elapsedTime * (0.025 * speedMultiplier);
+      neuralPlexus.rotation.z = elapsedTime * (0.015 * speedMultiplier);
+    }
+
+    // 3. Senku Hero Core scientific dynamics
     if (heroCoreGroup) {
-      // Smooth mouse follow with damped interpolation
       heroCoreGroup.rotation.y += (targetRotationY - heroCoreGroup.rotation.y) * 0.05 * deltaFactor;
       heroCoreGroup.rotation.x += (targetRotationX - heroCoreGroup.rotation.x) * 0.05 * deltaFactor;
 
-      // Organic idle floating
       heroCoreGroup.position.y += Math.sin(elapsedTime * 1.5) * 0.35 * deltaFactor;
 
-      // Internal component rotations
       if (innerCrystal) {
         innerCrystal.rotation.x += 0.008 * motionFactor;
         innerCrystal.rotation.y += 0.012 * motionFactor;
@@ -347,6 +417,10 @@
         ring2.rotation.x += 0.01 * motionFactor;
         ring2.rotation.y -= 0.012 * motionFactor;
       }
+
+      if (ring3) {
+        ring3.rotation.z -= 0.008 * motionFactor;
+      }
     }
 
     // Camera subtle drift
@@ -357,7 +431,6 @@
     renderer.render(scene, camera);
   }
 
-  // Initialize once DOM is ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initThree);
   } else {

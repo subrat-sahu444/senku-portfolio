@@ -64,6 +64,29 @@
   opacity: 1;
 }
 
+/* Futuristic Sci-Fi Micro Corner Brackets on Glass Cards */
+.glass-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: 
+    linear-gradient(to right, var(--color-senku-green) 2px, transparent 2px) 0 0,
+    linear-gradient(to bottom, var(--color-senku-green) 2px, transparent 2px) 0 0,
+    linear-gradient(to left, var(--color-senku-cyan) 2px, transparent 2px) 100% 100%,
+    linear-gradient(to top, var(--color-senku-cyan) 2px, transparent 2px) 100% 100%;
+  background-repeat: no-repeat;
+  background-size: 14px 14px;
+  opacity: 0.35;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), background-size 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 2;
+}
+
+.glass-card:hover::after {
+  opacity: 0.95;
+  background-size: 22px 22px;
+}
+
 /* Glowing Neon Card Variant */
 .glass-card-glow {
   border-color: rgba(0, 245, 160, 0.3);
